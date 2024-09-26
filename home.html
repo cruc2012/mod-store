@@ -1,0 +1,3080 @@
+
+
+<!DOCTYPE HTML>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width">
+    <title>Student Portal</title>
+    <link href="/Mannford/Gradebook/Content/themes/base/jquery-ui.min.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="/Mannford/Gradebook/Scripts/PersonPreview.css">
+    <style type="text/css">.mas-stretchDX, .mas-stretchDX-horizontal
+{
+    left: 0px;
+    right: 0px;
+}
+
+.mas-stretchDX, .mas-stretchDX-vertical
+{
+    top: 0px;
+    bottom: 0px;
+}
+
+.mas-stretch, .mas-stretch-horizontal, .mas-template-body, .mas-template-header, .TemplateModelFormHeader, div.mas-template-container
+{
+    left: 0px;
+    right: 0px;
+    width: 100%;
+}
+
+.mas-stretch, .mas-template-body
+{
+    top: 0px;
+    bottom: 0px;
+    height: 100%;
+}
+
+.div.mas-stretch, .div.mas-stretch-horizontal, div.mas-template-body, div.mas-template-header, div.TemplateModelFormHeader, div.mas-template-container
+{
+    padding-left: 0px;
+    margin-left: 0px;
+    padding-right: 0px;
+    margin-right: 0px;
+}
+
+.div.mas-stretch, div.mas-template-body, div.mas-template-header, div.TemplateModelFormHeader
+{
+    padding-top: 0px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+}
+
+div.mas-template-body
+{
+    overflow-y: auto;
+}
+
+.mas-template-header
+{
+    height: 24px;
+}
+
+div.mas-template-header, div.TemplateModelFormHeader, div.mas-template-container
+{
+    clear: both;
+    display: block;
+}
+
+div.mas-template-container {
+    height: 100%;
+    position: relative;
+    top: -24px;
+    bottom: 24px;
+    box-sizing: border-box;
+    padding-top: 24px;
+    margin-top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    pointer-events: none;
+}
+
+div.mas-template-container > div.mas-template-body {
+    pointer-events: all;
+}</style>
+    <link href="/Mannford/Gradebook/Content/mas-controls.v3.css" rel="stylesheet" />
+<link href="/Mannford/Gradebook/content/mas-moderno.v3.css" rel="stylesheet" />
+
+
+    <script src="/Mannford/Gradebook/Scripts/jquery-3.5.1.min.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/jquery.validate.min.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/jquery.validate.unobtrusive.min.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/jquery.unobtrusive-ajax.min.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/jquery-ui-1.12.1.min.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/cldr.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/cldr/event.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/cldr/supplemental.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/cldr/unresolved.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/globalize.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/globalize/message.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/globalize/number.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/globalize/currency.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/globalize/date.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/knockout-3.5.1.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/ace.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/ext-language_tools.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/theme-ambiance.js" type="text/javascript"></script>
+    <script src="/Mannford/Gradebook/Scripts/theme-dreamweaver.js" type="text/javascript"></script>
+
+    <link rel="stylesheet" href="/Mannford/Gradebook/DXR.axd?r=1_210,0_2681,1_68,1_69,1_209,0_2686,0_2693,0_2767,0_2697,0_2772,1_84,0_2713,7_11,0_2717,7_13,7_12,1_74,1_73,0_2706,4_120,4_111,4_112,0_2710,4_127,5_4,0_2736,0_2667,24_378-3kLpp" /><link rel="stylesheet" href="/Mannford/Gradebook/DXR.axd?r=24_379-3kLpp" /><link rel="stylesheet" href="/Mannford/Gradebook/DXR.axd?r=24_414,24_442,24_443,24_478,26_37,26_36,26_35,0_2787,26_34,0_2791,26_31,1_80-dkLpp" />
+    <script type="text/javascript">//Start ClientSideValidation script
+
+function Not_Nothing(s, e, description) {
+    if (IsNull(e.value)) {
+        InValidate(e, description)
+    }
+}
+
+function Not_Empty(s, e, description) {
+    if ((IsNullOrEmpty(e.value)) || ($.trim(String(e.value)) == "")) {
+        InValidate(e, description)
+    }
+}
+
+function Max_String_Length(s, e, description, length) {
+    if ((!IsNullOrEmpty(e.value)) && (String(e.value).length > length)) {
+        InValidate(e, description)
+    }
+}
+
+function Min_String_Length(s, e, description, length) {
+    if ((IsNullOrEmpty(e.value)) || (String(e.value).length < length)) {
+        InValidate(e, description)
+    }
+}
+
+function Date_Not_Min(s, e, description) {
+    var minDate = new Date('1/1/0001')
+    minDate.setFullYear(1, 1, 1)
+    if ((IsNullOrEmpty(e.value)) || (new Date(e.value) <= minDate)) {
+        InValidate(e, description)
+    }
+}
+
+function Date_Not_Max(s, e, description) {
+    var maxDate = new Date('12/31/9999')
+    if ((!IsNullOrEmpty(e.value)) && (new Date(e.value) >= maxDate)) {
+        InValidate(e, description)
+    }
+}
+
+function GUID_Not_Empty(s, e, description) {
+    if (IsEmptyGuid(e.value)) {
+        InValidate(e, description)
+    }
+}
+
+function Greater_Than(s, e, description, allowedValue) {
+    if ((IsNullOrEmpty(e.value)) || (e.value <= allowedValue)) {
+        InValidate(e, description)
+    }
+}
+
+function Less_Than(e, s, description, allowedValue) {
+    if ((IsNullOrEmpty(e.value)) || (e.value >= allowedValue)) {
+        InValidate(e, description)
+    }
+}
+
+function Valid_SQL_Date(s, e, description, allowedValue) {
+    if ((IsNullOrEmpty(e.value)) || (new Date(e.value) < allowedValue)) {
+        InValidate(e, description)
+    }
+}
+
+function Valid_Nullable_SQL_Date(s, e, description, allowedValue) {
+	if (new Date(e.value) < allowedValue) {
+		InValidate(e, description)
+	}
+}
+
+function Greater_Than_Or_Equal_To(s, e, description, allowedValue) {
+    if ((IsNullOrEmpty(e.value)) || (e.value < allowedValue)) {
+        InValidate(e, description)
+    }
+}
+
+function Less_Than_Or_Equal_To(s, e, description, allowedValue) {
+    if ((IsNullOrEmpty(e.value)) || (e.value > allowedValue)) {
+        InValidate(e, description)
+    }
+}
+
+function Between(s, e, description, lowValue, highValue) {
+    if ((IsNullOrEmpty(e.value)) || (e.value < lowValue || e.value > highValue)) {
+        InValidate(e, description)
+    }
+}
+
+function NullOrBetween(s, e, description, lowValue, highValue) {
+    if (IsNullOrEmpty(e.value)) {
+        return;
+    }
+    if (e.value < lowValue || e.value > highValue) {
+        InValidate(e, description)
+    }
+}
+
+function Date_Between(s, e, description, lowValue, highValue) {
+    if ((IsNullOrEmpty(e.value)) || (new Date(e.value) < lowValue || new Date(e.value) > highValue)) {
+        InValidate(e, description)
+    }
+}
+
+function Number_Range(s, e, description, lowValue, highValue) {
+    if ((IsNullOrEmpty(e.value)) || (e.value < lowValue || e.value > highValue)) {
+        InValidate(e, description)
+    }
+}
+
+function Equal_To(s, e, description, allowedValue) {
+    if (e.value != allowedValue) {
+        InValidate(e, description)
+    }
+}
+
+function Not_Equal_To(s, e, description, allowedValue) {
+    if (e.value == allowedValue) {
+        InValidate(e, description)
+    }
+}
+
+function InValidate(e, description, valid) {
+    if (!e.isValid) {
+        e.errorText = e.errorText + '\n' + description
+    }
+    else {
+        e.errorText = description;
+    }
+    e.isValid = false;
+}
+
+function IsNullOrEmpty(val) {
+    return (val === null) || ($.trim(String(val)) == "");
+}
+
+function IsNull(val) {
+    return (val === null);
+}
+
+function IsEmptyGuid(val) {
+    return IsNullOrEmpty(val) || GuidCharacters(val).length != 32 || GuidCharacters(val).replace(/[0]/g, '') == '';
+}
+
+function GuidCharacters(val) {
+    return val.replace(/[^a-fA-f 0-9]+/g, '');
+}
+
+function ReadCookie(c_name) {
+    var x, y, ARRcookies = document.cookie.split(';');
+    cookieIndex = 0;
+    for (cookieIndex = 0; cookieIndex < ARRcookies.length; cookieIndex++) {
+        x = ARRcookies[cookieIndex].substr(0, ARRcookies[cookieIndex].indexOf('='));
+        y = ARRcookies[cookieIndex].substr(ARRcookies[cookieIndex].indexOf('=') + 1);
+        x = x.replace(/^\s+|\s+$/g, "");
+        if (x == c_name) {
+            return unescape(y);
+        }
+    }
+    return null;
+}
+
+function ReadCookieValue(cookieName, valueName) {
+    var foundCookie = ReadCookie(cookieName);
+    if (foundCookie != null) {
+        var cookieValue = CookieValues(cookieName)[valueName];
+        if (cookieValue != null && typeof (cookieValue) != 'undefined') {
+            return cookieValue;
+        }
+    }
+    return null;
+}
+
+function CookieValues(c_name) {
+    var _ret = {};
+    var _cookie = ReadCookie(c_name);
+    if (_cookie == null || typeof (_cookie) == 'undefined') {
+        return _ret;
+    } else {
+        var _cookieVals = _cookie.split('&');
+        for (valIndex = 0; valIndex < _cookieVals.length; valIndex++) {
+            _ret[_cookieVals[valIndex].substr(0, _cookieVals[valIndex].indexOf('=')).replace(/^\s+|\s+$/g, '')] = unescape(_cookieVals[valIndex].substr(_cookieVals[valIndex].indexOf('=') + 1));
+        }
+        return _ret;
+    }
+}
+
+function Is_Numeric(s, e, description, allowedValue) {
+    if (!isNumber(e.value)) {
+        InValidate(e, description)
+    }
+}
+
+function Is_Null_Or_Numeric(s, e, description, allowedValue) {
+    if (e.value == null) {
+        return;
+    } else {
+        var _baseValue = e.value;
+
+        if (_baseValue.substr(0, 1) == '$') {
+            _baseValue = _baseValue.replace('$', '');
+        }
+
+        _baseValue = _baseValue.trim();
+
+        if (!isNumber(_baseValue)) {
+            InValidate(e, description)
+        }
+    }
+}
+
+function isNumber(n) {
+    if (isMoney(n)) {
+        return true;
+    }
+    else {
+        if (numbercheck(n)) {
+            return true;
+        } else {
+            n = n.toString().replace(/\,/g, '');
+            return numbercheck(n);
+        }
+
+    }
+}
+
+function numbercheck(n) {
+    return !isNaN(parseFloat(n)) && isFinite(n);
+}
+
+function isMoney(n) {
+
+    if (n != null && n.length > 0) {
+        if (n.substr(0, 1) == '$') {
+            n = n.replace('$', '');
+
+        }
+
+        if (n.substr(0, 1) == '(' && n.substr(1, 1) == '$' && n.substr(n.length - 1, 1) == ")") {
+            n = n.replace('$', '');
+            n = n.replace('(', '');
+            n = n.replace(')', '');
+
+        }
+        n = n.toString().replace(/\,/g, '');
+        return numbercheck(n);
+    }
+    return false;
+}
+
+function Is_Ad_Hoc_Guid(s, e, description, allowedValue) {
+    if (GuidCharacters(e.value).length < 22 || GuidCharacters(e.value).substr(0, 21) == '0000000000000000000000') {
+        InValidate(e, description)
+    }
+}
+
+function GetTextNumber(input, nullIsZero) {
+
+    if (input == null) {
+        if (nullIsZero) {
+            return 0.0;
+        } else {
+            return null;
+        }
+        
+    }
+
+    input = input.trim();
+
+    if (isMoney(input)) {
+        if (input.substr(0, 1) == '(') {
+            return Number('-' + input.replace(/[^0-9-\.]+/g, ''));
+        } else {
+            return Number(input.replace(/[^0-9-\.]+/g, ''));
+        }
+
+    }
+
+    if (isNumber(input)) {
+        return Number(input);
+    }
+
+    return 0.0;
+}
+
+
+
+//If there are thousandands seperators (the ',' character) make shure they are proper.
+//If null is passed returns true
+function ProperThousandsSeperator(val) {
+    if (val) {
+        val = val.toString();
+        val = truncateDecimals(val, 0);
+        val = val.replace('.', '');
+        vals = val.split(',');
+        if (vals.length == 1 && vals[0] == val) {
+            return true;
+        }
+
+        for (i = 0; i < vals.length; i++) {
+            if (i == 0) {
+                if (!numbercheck(vals[i]) || vals[i].length > 3 || vals[i].length == 0) {
+                    return false;
+                }
+
+            } else
+                if (!numbercheck(vals[i]) || vals[i].length != 3) {
+                    return false;
+                }
+        }
+        return true;
+    }
+
+    return true;
+}</script>
+    <script type="text/javascript">!function (t) { "use strict"; var i = {}, n = {}, r = function (t) { return t.slice(0) }; t.subscribe = function (r, c, e, u) { var s, o = {}; return e = e || n, "string" === t.type(r) && t.isFunction(c) ? (s = r.split(" "), t.each(s, function (t, n) { return "" === n || o[n] ? !0 : (o[n] = !0, i[n] || (i[n] = []), void i[n].push([c, e, u])) }), { topics: r, callback: c, context: e, subscriber: u }) : null }, t.unsubscribe = function (r, c, e, u) { var s, o = {}; return r && ("string" === t.type(r) || r.topics && "string" === t.type(r.topics)) ? (r.topics && (c = c || r.callback, e = e || r.context, r = r.topics, u = r.subscriber), e = e || n, s = r.split(" "), t.each(s, function (n, r) { var s = i[r]; return "" === r || !s || o[r] ? !0 : (o[r] = !0, void (c && t.isFunction(c) || u ? t.each(s, function (t, i) { if (i[2] === u) { if (!c || i[0].toString() === c.toString()) return s.splice(t, 1), !1 } else if (i[0] === c && i[1] === e) return s.splice(t, 1), !1 }) : delete i[r])) }), t) : t }, t.publish = function (n, c) { if (!n || "string" !== t.type(n)) return t; var e = n.split(" "); return t.each(e, function (n, e) { if ("" === e) return !0; if (i[e]) { var u = r(i[e]); t.each(u, function (t, i) { i[0].call(i[1], e, c) }) } }), t } }(jQuery);</script>
+    <script type="text/javascript">//Start GridHandlers script
+var Response_Ended = 'Response_Ended'
+var MAS_Server_Message = "MAS_Server_Message"
+var MAS_Grid_Callback_Edit_End = "MAS_Grid_Callback_EditEnd"
+var MAS_Grid_Callback = "MAS_Grid_Callback"
+var MAS_Grid_Begin_Callback = "MAS_Grid_Begin_Callback"
+var MAS_Grid_Callback_Edit_Fail = "MAS_Grid_Callback_Edit_Fail"
+var MAS_Grid_Callback_Edit_Canceled = "MAS_Grid_Callback_Edit_Canceled"
+var MAS_Grid_Callback_Edit_Show_Edit = "MAS_Grid_Callback_ShowEdit"
+
+$.ajaxSetup({
+    statusCode: {
+        401: function () {
+            location.reload(true);
+        }}
+})
+
+function SubmitGrid(grid, editMode, validationElement, validationGroup) {
+    if (ValidateControls(validationElement, validationGroup)) {
+        grid.cpCustomEditMode = editMode;
+        grid.PerformCallback(editMode);
+        grid.SetHorizontalScrollPosition(0);
+    }
+}
+
+function CheckAndMove(e, s, expression, waitInMS, controlName) {
+    if (e.htmlEvent && (e.htmlEvent.keyCode >= 48) && (e.htmlEvent.target.value.match(expression))) {
+        if (s.focused) {
+            setTimeout(function () {
+                var _target = ASPxClientControl.GetControlCollection().GetByName(controlName);
+                if (_target && _target.SetFocus && !_target.focused && s.focused) {
+                    _target.SetFocus();
+                }
+            }, waitInMS);
+        }
+    }
+}
+
+function SelectListItemAndMoveFocus(s, e, nextControlName, moveFocus) {
+    if (s.GetItemCount() == 1) {
+        s.SetSelectedIndex(0);
+        var _topItem = s.GetListBoxControl().GetSelectedItem();
+
+        if (_topItem) {
+            s.SetValue(_topItem.value);
+            s.RaiseValueChangedEvent();
+            if (s.HideDropDown) s.HideDropDown();
+            s.Validate();
+            var _target = ASPxClientControl.GetControlCollection().GetByName(nextControlName);
+            if (_target && moveFocus) {
+                if (_target.SetFocus) {
+                    if (_target.focused) {
+                        return;
+                    } else {
+                        _target.SetFocus();
+                    }
+                }
+
+            }
+        }
+    }
+}
+
+//vvv AUTO-TAB CALLBACK COMBO BOX vvv//
+var jMASExpressionComboBox = function () { };
+
+jMASExpressionComboBox.HandleInputKeyDown = function (s, e) {
+    if ((!s.cpDisableResetOnKeyDown) && e.htmlEvent && (e.htmlEvent.keyCode >= 48)) {
+        s.cpDisableResetOnKeyDown = true;
+        s.cpMatchedInputText = null;
+        s.SetValue(null);
+    }
+};
+
+jMASExpressionComboBox.HandleInputKeyUp = function (s, e) {
+    if (e.htmlEvent && (e.htmlEvent.keyCode >= 48)) {
+        if (e.htmlEvent.target.value.match(s.cpExpression)) {
+            s.cpMatchedInputText = e.htmlEvent.target.value;
+        } else {
+            s.cpMatchedInputText = null;
+        }
+    }
+};
+
+jMASExpressionComboBox.SelectTextItemOnEndCallback = function (s, e) {
+    if (s.cpMatchedInputText) {
+        if (s.GetItemCount() == 1) {
+            s.SetSelectedIndex(0);
+            var _topItem = s.GetListBoxControl().GetSelectedItem();
+            if (_topItem) {
+                s.SetValue(_topItem.value);
+                s.RaiseValueChangedEvent();
+                if (s.HideDropDown) s.HideDropDown();
+            }
+        }
+    }
+    s.Validate();
+};
+
+jMASExpressionComboBox.HandleLostFocus = function (s, e) {
+    s.cpDisableResetOnKeyDown = false;
+};
+
+jMASExpressionComboBox.HandleControlInit = function (s, e, expression) {
+    s.cpDisableResetOnKeyDown = false;
+    s.cpMatchedInputText = null;
+
+    s.EndCallback.AddHandler(function (s, e) { jMASExpressionComboBox.SelectTextItemOnEndCallback(s, e); });
+    s.cpExpression = expression;
+    s.KeyUp.AddHandler(function (s, e) { jMASExpressionComboBox.HandleInputKeyUp(s, e); });
+    s.KeyDown.AddHandler(function (s, e) { jMASExpressionComboBox.HandleInputKeyUp(s, e); });
+    s.LostFocus.AddHandler(function (s, e) { jMASExpressionComboBox.HandleLostFocus(s, e); });
+};
+//^^^ AUTO-TAB CALLBACK COMBO BOX ^^^//
+
+$(document).ready(function () {
+    $(window).keydown(function (event) {
+        if (event.keyCode == 13 && !$(document.activeElement).is('textarea')) {
+            event.preventDefault();
+            return false;
+        }
+    });
+});
+
+function IsNullOrUndefined(value) {
+    return typeof value === "undefined" || value === null;
+}
+
+function OnValueChange(s, e, url, fieldName, keyValue) {
+    if (fieldName.GetIsValid()) {
+        var data = { key: keyValue, fieldName: fieldName };
+        if (s.GetValueString() !== null) {
+            data.value = s.GetValueString();
+            $.ajax
+                ({
+                    type: "POST",
+                    url: url,
+                    data: data,
+                    beforeSend: function () { $(".status").text("Request has been sent"); },
+                    success: function (msg) { $(".status").html(msg); }
+                });
+        }
+    }
+}
+
+function OnAddClick(s, e, grid) {
+    if (ASPxClientEdit.ValidateEditorsInContainer(grid, true)) {
+        grid.PerformCallback("AddRow");
+    }
+}
+
+function OnDeleteClick(s, e, grid) {
+    if (ASPxClientEdit.ValidateEditorsInContainer(grid, true)) {
+        grid.PerformCallback("DeleteSelectedRows" + grid.keys[grid.focusedRowIndex]);
+    }
+}
+
+function OnSaveClick(s, e, grid) {
+    if (ASPxClientEdit.ValidateEditorsInContainer(grid, true)) {
+        grid.PerformCallback("SaveAll");
+    }
+}
+
+function OnCancelClick(s, e, grid) {
+    grid.CancelEdit();
+}
+
+function FocusedKey(grid) {
+    if (grid)
+        return grid.keys[grid.focusedRowIndex];
+    else
+        return null
+}
+
+function OnFocusedRowChanged(s, e, url, containerName, keyScript) {
+    var keyFieldValue
+    if (keyScript) {
+        keyFieldValue = keyScript();
+    }
+    else {
+        keyFieldValue = s.keys[s.focusedRowIndex];
+    }
+
+    AjaxGetAndShow(url, keyFieldValue, containerName, null);
+}
+
+function OnCascadingGridFocusedRowChanged(grid, args, url, formID, postData, containerName, successAction) {
+    var keyFieldValue = grid.GetRowKey(grid.GetFocusedRowIndex());
+    if (grid.cpOldRowKey == undefined) grid.cpOldRowKey = '1';
+    var oldKeyValue = grid.cpOldRowKey;
+    grid.cpOldRowKey = keyFieldValue;
+    if (keyFieldValue != oldKeyValue) {
+        var _data = null;
+        var _contentType = 'application/x-www-form-urlencoded';
+        if (formID) {
+            _data = MakeData(formID, postData, keyFieldValue);
+        } else {
+            _data = JSON.stringify(MakeData(formID, postData, keyFieldValue));
+            _contentType = 'application/json';
+        }
+        $.ajax({
+            type: "POST",
+            accepts: 'text/html',
+            dataType: 'html',
+            contentType: _contentType,
+            url: url,
+            data: _data,
+            success: function (response, statusText, jqXHR) {
+                fillWithResponse(containerName, response, statusText, jqXHR);
+                if (successAction)
+                    successAction();
+            }
+        });
+    }
+}
+
+function AjaxPostAndShow(url, key, containerName, successAction) {
+    var data = { keyvalue: key };
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function (response, statusText, jqXHR) {
+            fillWithResponse(containerName, response, statusText, jqXHR);
+            if (successAction)
+                successAction();
+        }
+    });
+}
+
+function AjaxGetAndShow(url, key, containerName, successAction) {
+    var data = { keyvalue: key };
+    $.ajax({
+        type: "GET",
+        url: url,
+        data: data,
+        success: function (response, statusText, jqXHR) {
+            fillWithResponse(containerName, response, statusText, jqXHR);
+            if (successAction)
+                successAction();
+        }
+    });
+}
+
+function AjaxPostJSON(url, data, onSuccess, onError, raiseEvents) {
+    $.ajax({
+        type: "POST",
+        dataType: 'json',
+        contentType: 'application/json',
+        url: url,
+        data: JSON.stringify(data),
+        global: raiseEvents == undefined ? true : raiseEvents,
+        error: onError,
+        success: onSuccess
+    });
+}
+
+function AjaxPostJSONandShow(url, data, containerName, onSuccess, onError) {
+    $.ajax({
+        type: "POST",
+        accepts: 'text/html',
+        dataType: 'html',
+        contentType: 'application/json',
+        url: url,
+        data: JSON.stringify(data),
+        error: onError,
+        success: function (response, statusText, jqXHR) {
+            if (containerName) fillWithResponse(containerName, response, statusText, jqXHR);
+            if (onSuccess) onSuccess();
+        }
+    });
+}
+
+function PostWithoutResponse(url, validationGroup, formID, postData, prePostMethod, validationFailedMethod, raiseEvents) {
+    if (ValidateControls(formID, validationGroup)) {
+        if (prePostMethod)
+            prePostMethod();
+        $.ajax({
+            type: "POST",
+            url: url,
+            global: raiseEvents,
+            data: GetData(formID, postData),
+        });
+    } else {
+        if (validationFailedMethod)
+            validationFailedMethod();
+    }
+}
+
+function PostData(s, e, url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck) {
+    MASPost(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, true);
+}
+
+function PostDataNoEvent(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck) {
+    MASPost(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, true);
+}
+
+function PostDataSilent(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck) {
+    MASPost(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, false);
+}
+
+function MASPost(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, raiseEvents) {
+    if (ValidateControls(formID, validationGroup)) {
+        if (prePostMethod)
+            prePostMethod();
+        $.ajax({
+            type: "POST",
+            url: url,
+            global: raiseEvents,
+            data: GetData(formID, postData),
+            success: function (response, statusText, jqXHR) { ProcessResponse(response, statusText, jqXHR, responseContainer, successMethod, responseCheck) }
+        });
+    } else {
+        if (validationFailedMethod)
+            validationFailedMethod();
+    }
+}
+
+function MASJSONPost(url, validationGroup, elementID, responseContainer, successMethod, prePostMethod, validationFailedMethod, responseCheck, raiseEvents) {
+    if (ValidateControls(elementID, validationGroup)) {
+        if (prePostMethod)
+            prePostMethod();
+        $.ajax({
+            type: "POST",
+            url: url,
+            global: raiseEvents,
+            contentType: 'application/json',
+            data: JSON.stringify($('#' + elementID).formParams()),
+            success: function (response, statusText, jqXHR) { ProcessResponse(response, statusText, jqXHR, responseContainer, successMethod, responseCheck) }
+        });
+    } else {
+        if (validationFailedMethod)
+            validationFailedMethod();
+    }
+}
+
+function ProcessResponse(response, statusText, jqXHR, responseContainer, successMethod, responseCheck) {
+    if (typeof responseCheck === 'undefined' || responseCheck === null) {
+        FillAndExecuteSuccessMethod(response, statusText, jqXHR, responseContainer, successMethod);
+    }
+    else if (responseCheck(response)) {
+        FillAndExecuteSuccessMethod(response, statusText, jqXHR, responseContainer, successMethod);
+    }
+}
+
+function FillAndExecuteSuccessMethod(response, statusText, jqXHR, responseContainer, successMethod) {
+    fillWithResponse(responseContainer, response, statusText, jqXHR);
+    if (successMethod && jqXHR.status != 202)
+        successMethod();
+}
+
+function fillWithResponse(containerName, respHtml, statusText, jqXHR) {
+    if (jqXHR.status == 202) {
+        Handle202(pcErrorMessage, respHtml, jqXHR);
+        return;
+    }
+    if (containerName) {
+        var oldMethod = ASPx.GetFocusedElement;
+        try {
+            ASPx.GetFocusedElement = function () {
+                var focusedItem = oldMethod();
+                if (focusedItem) {
+                    return focusedItem;
+                }
+                else {
+                    focusedItem = {
+                        selectionStart: null,
+                        selectionEnd: null
+                    }
+                }
+                return focusedItem;
+
+            }
+            $("#" + containerName).html(respHtml);
+        }
+        finally {
+            ASPx.GetFocusedElement = oldMethod;
+        }
+
+        if (window.jMAS)
+            if (window.jMAS.stretchChildren)
+                window.jMAS.stretchChildren($("#" + containerName).get(0));
+
+    }
+
+    var data = new Object();
+    data.HeaderInfo = jqXHR;
+    data.ContainerName = containerName;
+    data.ResponseData = respHtml;
+    data.StatusText = statusText;
+    jQuery.publish(Response_Ended, data);
+}
+
+function SendGetData(s, e, url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck) {
+    MASGet(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, true);
+}
+
+function SendGetDataNoEvent(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck) {
+    MASGet(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, true);
+}
+
+function SendGetDataSilent(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck) {
+    MASGet(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, false);
+}
+
+function MASGet(url, validationGroup, formID, responseContainer, postData, successMethod, prePostMethod, validationFailedMethod, responseCheck, raiseEvents) {
+    if (ValidateControls(formID, validationGroup)) {
+        if (prePostMethod)
+            prePostMethod();
+        $.ajax({
+            type: "GET",
+            url: url,
+            data: GetData(formID, postData),
+            global: raiseEvents,
+            success: function (response, statusText, jqXHR) { ProcessResponse(response, statusText, jqXHR, responseContainer, successMethod, responseCheck) }
+        });
+    } else {
+        if (validationFailedMethod)
+            validationFailedMethod();
+    }
+}
+
+
+function ValidateControls(formID, validationGroup) {
+    if (formID) {
+        return ASPxClientEdit.ValidateEditorsInContainer(document.getElementById(formID), validationGroup, false);
+    } else {
+        return true;
+    }
+}
+
+function MakeData(formID, postData, keyValue) {
+    var _ret = null;
+    if (formID) {
+        _ret = $("#" + formID).serialize();
+        if (keyValue) _ret = _ret + '&keyvalue=' + keyValue.toString();
+        if (postData) _ret = _ret + '&val=' + postData.toString();
+    } else {
+        var _json = {};
+        if (keyValue) _json.keyvalue = keyValue;
+        if (postData) _json.val = postData;
+        _ret = _json;
+    }
+    return _ret;
+}
+
+
+function GetData(formID, postData) {
+    if (formID) {
+        return $("#" + formID).serialize();
+    }
+    else if (postData) {
+        var data = { val: postData };
+        return data;
+    }
+    else {
+        return null;
+    }
+}
+
+function RefreshView(responseContainer, keyControl, callbackCheck) {
+    if (keyControl && responseContainer && document.getElementById(keyControl)) {
+
+        if (callbackCheck != null) {
+            if (callbackCheck) {
+                responseContainer.PerformCallback(keyvalue);
+            }
+        } else if (!IsEmptyGuid(document.getElementById(keyControl).value)) {
+            responseContainer.PerformCallback(document.getElementById(keyControl).value);
+        }
+    }
+}
+
+function OnExportGridClick(s, e, form) {
+    document.getElementById(form).submit();
+}
+
+function OnToolBarOnItemChanged(s, e, inputname) {
+    $("input[name='" + inputname + "']").val(s.GetText());
+}
+
+function GetKeys(grid) {
+    if (grid.cpGridKeys) {
+        return grid.cpGridKeys;
+    } else {
+        var keysStings = "";
+        for (var i = grid.GetTopVisibleIndex(); i < grid.GetVisibleRowsOnPage(); i++) {
+            var key = grid.GetRowKey(i);
+            keysStings += key + "|";
+        }
+        if (keysStings.length > 0)
+            keysStings = keysStings.substring(0, keysStings.length - 1);
+        return keysStings;
+    }
+}
+
+function SetKeys(grid, hiddenID) {
+    if (grid && hiddenID) {
+
+        document.getElementById(hiddenID).value = GetKeys(grid);
+    }
+}
+
+function PostDataWithSelectionGrid(s, e, url, validationGroup, formID, responseContainer, grid, hiddenID, successMethod) {
+    if (ValidateControls(formID, validationGroup)) {
+        SetKeys(grid, hiddenID);
+        $.ajax({
+            type: "POST",
+            url: url,
+            data: $("#" + formID).serialize(),
+            success: function (response, statusText, jqXHR) {
+                fillWithResponse(responseContainer, response, statusText, jqXHR);
+                if (successMethod)
+                    successMethod();
+
+            }
+        });
+    }
+}
+
+function tabPageChange(s, e, clearPages, preScript, postScript) {
+    if (preScript)
+        preScript(s, e);
+    if (clearPages) {
+        e.reloadContentOnCallback = true;
+        for (var iTab = 0; iTab < s.tabs.length; iTab++) {
+            _aspxSetInnerHtml(s.GetContentElement(iTab), '');
+        };
+    }
+    if (postScript)
+        postScript(s, e);
+}
+
+
+function CalculatePrice(url, quantity, sourcePrice, isReversed, successMethod, errorMethod) {
+    if (url && successMethod && (sourcePrice != null) && (quantity != null)) {
+        $.ajax
+            ({
+                type: "GET",
+                url: url,
+                dataType: "json",
+                data: { quantity: quantity, sourcePrice: sourcePrice, reversed: isReversed },
+                global: false,
+                success: function (pReslt) {
+                    try {
+                        if (successMethod) successMethod(pReslt);
+                    } catch (ex) {
+                        try {
+                            if (errorMethod) errorMethod(ex.Message);
+                        } catch (ex2) {
+                            return;
+                        }
+                    }
+                },
+                error: function (req, textStatus, errorMessage) {
+                    try {
+                        if (errorMethod) errorMethod(errorMessage);
+                    } catch (ex) {
+                        return;
+                    }
+                }
+            });
+    } else {
+        try {
+            if (errorMethod) errorMethod('Invalid or null parameter.');
+        } catch (ex) {
+            return;
+        }
+    }
+}
+
+function GetCheckedNodes(nodeParent) {
+    var MyVal = "";
+
+    for (var i = 0; i < nodeParent.GetNodeCount(); i++) {
+        if (nodeParent.GetNode(i).GetChecked()) {
+            MyVal = MyVal + '|' + nodeParent.GetNode(i).name;
+        }
+
+        if (nodeParent.GetNode(i).GetNodeCount() != 0) {
+            MyVal = MyVal + GetCheckedNodes(nodeParent.GetNode(i));
+        }
+    }
+
+    return MyVal;
+}
+
+function GetShownNodesState(nodeParent) {
+    var MyVal = "";
+    for (var i = 0; i < nodeParent.GetNodeCount(); i++) {
+        var checkState = "";
+        if (nodeParent.GetNode(i).GetChecked()) {
+            checkState = "+";
+        } else if (nodeParent.GetNode(i).GetCheckState() != "Indeterminate") {
+            checkState = "-";
+        }
+
+        if (checkState != "") {
+            MyVal = MyVal + '|' + checkState + nodeParent.GetNode(i).name;
+        }
+
+
+        if (nodeParent.GetNode(i).GetNodeCount() != 0) {
+            MyVal = MyVal + GetShownNodesState(nodeParent.GetNode(i));
+        }
+    }
+
+    return MyVal;
+}
+
+function MoveToNextControl(event, source) {
+    if (event.keyCode == 40 || event.keyCode == 13) {
+        MoveNextRow(source);
+        event.preventDefault();
+        if (event.keyCode == 13) {
+            event.cancelBubble = true;
+            event.stopPropagation();
+        }
+
+        return false;
+    }
+    if (event.keyCode == 38) {
+        MovePreviousRow(source);
+        event.preventDefault();
+        return false;
+    }
+
+    return true;
+}
+
+function MoveToNextControlWithTab(event, source) {
+    if (event.keyCode == 40 || event.keyCode == 13) {
+        MoveNextRow(source);
+        event.preventDefault();
+        if (event.keyCode == 13) {
+            event.cancelBubble = true;
+            event.stopPropagation();
+        }
+
+        return false;
+    }
+    if (event.keyCode == 38) {
+        MovePreviousRow(source);
+        event.preventDefault();
+        return false;
+    }
+    if (event.keyCode == 9) {
+        if (!event.shiftKey) { //tab
+            MoveNextCell(source, event);
+        }
+        else { //shift-tab
+            MovePreviousCell(source, event);
+        }
+        ASPxClientUtils.PreventEventAndBubble(event);
+        return false;
+    }
+
+    return true;
+}
+
+function MoveNextRow(source) {
+    var currentCol = parseInt(source.getAttribute("colPos"));
+    var currentRow = parseInt(source.getAttribute("rowPos"));
+    var nextRow = currentRow + 1;
+    var targetControls = jQuery("input[colPos=" + currentCol + "][value!='N/A']").filter(function () { return jQuery(this).attr("rowPos") > currentRow; })
+    if (targetControls.length > 0) {
+        nextRow = targetControls.first().attr("rowPos");
+    } else {
+        nextRow = currentRow;
+    }
+    var input = $("input[rowPos=" + nextRow + "][colPos=" + currentCol + "][value!='N/A']");
+    input.focus();
+    input.select();
+}
+
+function MovePreviousRow(source) {
+    var currentCol = parseInt(source.getAttribute("colPos"));
+    var currentRow = parseInt(source.getAttribute("rowPos"));
+    var nextRow = currentRow - 1;
+    var targetControls = jQuery("input[colPos=" + currentCol + "][value!='N/A']").filter(function () { return jQuery(this).attr("rowPos") < currentRow; })
+    if (targetControls.length > 0) {
+        nextRow = targetControls.last().attr("rowPos");
+    } else {
+        nextRow = currentRow - 1;
+    }
+    var input = $("input[rowPos=" + nextRow + "][colPos=" + currentCol + "][value!='N/A']");
+    input.focus();
+    input.select();
+}
+
+function MoveNextCell(source, event) {
+    var nextIndex = 0;
+    var currentRow = parseInt(source.getAttribute("rowPos"));
+    var currIndex = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").index(source);
+    var grid = jQuery(source).closest("table[class^='dxgvControl_']").attr("id").toString();
+    grid = eval(grid);
+
+    if (currIndex >= (jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").length - 1)) {
+        var targetControls = jQuery("input[colPos!='-1'][value!='N/A']").filter(function () { return jQuery(this).attr("rowPos") > currentRow; })
+        if (targetControls.length > 0) {
+            currentRow = targetControls.first().attr("rowPos");
+        } else {
+            currentRow = currentRow + 1;
+        }
+        nextIndex = 0;
+    } else {
+        nextIndex = currIndex + 1;
+    }
+
+    var input = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']:eq(" + nextIndex + ")");
+
+    if (input.length > 0) {
+        var parentCell = jQuery(input).closest(".dxgv");
+        if (!IsVisible(parentCell)) {
+            ScrollToInvisibleCell(parentCell, input);
+        } else {
+            input.focus();
+            input.select();
+        }
+    } else {
+        grid.SetHorizontalScrollPosition(0);
+    }
+}
+
+function MovePreviousCell(source, event) {
+    var nextIndex = 0;
+    var currentRow = parseInt(source.getAttribute("rowPos"));
+    var currIndex = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").index(source);
+
+    if (currIndex <= 0) {
+        var targetControls = jQuery("input[colPos!='-1'][value!='N/A']").filter(function () { return jQuery(this).attr("rowPos") < currentRow; })
+        if (targetControls.length > 0) {
+            currentRow = targetControls.last().attr("rowPos");
+        } else {
+            currentRow = currentRow - 1;
+        }
+        nextIndex = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").length - 1;
+    } else {
+        nextIndex = currIndex - 1;
+    }
+
+    var input = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']:eq(" + nextIndex + ")");
+
+    if (input.length > 0) {
+        var parentCell = jQuery(input).closest(".dxgv");
+
+        if (!IsVisible(parentCell)) {
+            ScrollToInvisibleCell(parentCell, input);
+        } else {
+            input.focus();
+            input.select();
+        }
+    }
+}
+
+function ScrollToInvisibleCell(parentCell, input) {
+    var cnt1 = jQuery(".AssignmentHeader").length;
+    var cnt2 = parentCell.parent().children().length;
+    var scroll = (parentCell.index() - (cnt2 - cnt1) + 1) * parentCell.width();
+    var grid = jQuery(parentCell).closest("table[class^='dxgvControl_']").attr("id").toString();
+    grid = eval(grid);
+
+    grid.SetHorizontalScrollPosition(scroll);
+
+    setTimeout(function () {
+        input.focus();
+        input.select();
+    }, 0);
+}
+
+function IsVisible(element) {
+    if ((GetPosition(element) > 0) && (jQuery(element).css("display") != "none")) { //columns behind fixed columns are hidden
+        return true;
+    }
+    return false;
+}
+
+function GetPosition(element) {
+    var grid = jQuery(element).closest("table[class^='dxgvControl_']").attr("id").toString();
+    grid = eval(grid);
+    var totalWidth = jQuery(grid.GetMainElement()).width();
+    var editorWidth = jQuery(element).width();
+    if (jQuery(element).offset()) {
+        var offset = jQuery(element).offset().left - jQuery(grid.GetMainElement()).offset().left;
+
+        return (totalWidth - (editorWidth + offset));
+    } else {
+        return 0;
+    }
+}
+
+function ScrollToAssignment(val) {
+    var input = jQuery("input.AsgmtID[value=" + val + "]");
+    if (input) {
+        var assignmentCell = jQuery(input).closest("[class*='dxgvHeader_']");
+        ScrollToAssignmentCell(assignmentCell);
+    }
+}
+
+function ScrollToAssignmentCell(assignmentCell) {
+    var cnt1 = jQuery(".AssignmentHeader").length;
+    var cnt2 = assignmentCell.parent().children().length;
+    var scroll = (assignmentCell.index() - (cnt2 - cnt1) + 1) * assignmentCell.width();
+
+    if (jQuery(assignmentCell).closest("table[class^='dxgvControl_']").attr("id")) {
+        var grid = jQuery(assignmentCell).closest("table[class^='dxgvControl_']").attr("id").toString();
+        grid = eval(grid);
+
+        setTimeout(function () {
+            grid.SetHorizontalScrollPosition(scroll);
+        }, 0);
+    }
+}
+
+/***
+    Table Control Navigation - Handles Up/Down/Tab/Enter
+***/
+
+function MoveToNextTableControl(event, source) {
+    if (event.keyCode == 40 || event.keyCode == 13) {
+        MoveNextRow(source);
+        event.preventDefault();
+        if (event.keyCode == 13) {
+            event.cancelBubble = true;
+            event.stopPropagation();
+        }
+
+        return false;
+    }
+    if (event.keyCode == 38) {
+        MovePreviousRow(source);
+        event.preventDefault();
+        return false;
+    }
+
+    return true;
+}
+
+function MoveToNextTableControlWithTab(event, source) {
+    if (event.keyCode == 40 || event.keyCode == 13) { // Down Arrow OR Enter
+        MoveNextRow(source);
+        event.preventDefault();
+        if (event.keyCode == 13) {
+            event.cancelBubble = true;
+            event.stopPropagation();
+        }
+
+        return false;
+    }
+    if (event.keyCode == 38) { // Up Arrow
+        MovePreviousRow(source);
+        event.preventDefault();
+        return false;
+    }
+    if (event.keyCode == 9) {
+        if (!event.shiftKey) { // Tab
+            MoveNextTableCell(source, event);
+        }
+        else { // Shift + Tab
+            MovePreviousTableCell(source, event);
+        }
+        ASPxClientUtils.PreventEventAndBubble(event);
+        return false;
+    }
+
+    return true;
+}
+
+function MoveNextTableCell(source, event) {
+    var nextIndex = 0;
+    var currentRow = parseInt(source.getAttribute("rowPos"));
+    var currIndex = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").index(source);
+
+    if (currIndex >= (jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").length - 1)) {
+        var targetControls = jQuery("input[colPos!='-1'][value!='N/A']").filter(function () { return jQuery(this).attr("rowPos") > currentRow; })
+        if (targetControls.length > 0) {
+            currentRow = targetControls.first().attr("rowPos");
+        } else {
+            currentRow = currentRow + 1;
+        }
+        nextIndex = 0;
+    } else {
+        nextIndex = currIndex + 1;
+    }
+
+    var input = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']:eq(" + nextIndex + ")");
+
+    if (input.length > 0) {
+        input.focus();
+        input.select();
+    } else {
+        jQuery("#RecordScoresGrid").scrollLeft(0);
+    }
+}
+
+function MovePreviousTableCell(source, event) {
+    var nextIndex = 0;
+    var currentRow = parseInt(source.getAttribute("rowPos"));
+    var currIndex = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").index(source);
+
+    if (currIndex <= 0) {
+        var targetControls = jQuery("input[colPos!='-1'][value!='N/A']").filter(function () { return jQuery(this).attr("rowPos") < currentRow; })
+        if (targetControls.length > 0) {
+            currentRow = targetControls.last().attr("rowPos");
+        } else {
+            currentRow = currentRow - 1;
+        }
+        nextIndex = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']").length - 1;
+    } else {
+        nextIndex = currIndex - 1;
+    }
+
+    var input = jQuery("input[rowPos=" + currentRow + "][colPos!='-1'][value!='N/A']:eq(" + nextIndex + ")");
+
+    if (input.length > 0) {
+        input.focus();
+        input.select();
+    }
+}
+
+function ScrollToTableAssignment(val) {
+    var input = jQuery("input.AsgmtID[value=" + val + "]");
+    if (input) {
+        var assignmentCell = jQuery(input).closest("[class*='rsHeadCell']");
+
+        if (jQuery(assignmentCell).position().left <= jQuery("#RecordScoresGrid").scrollLeft()) {
+            jQuery("#RecordScoresGrid").scrollLeft(assignmentCell.position().left - 2);
+        } else {
+            var containerWidth = jQuery("#RecordScoresGrid").innerWidth();
+            if ((assignmentCell.position().left + assignmentCell.width()) > (containerWidth + jQuery("#RecordScoresGrid").scrollLeft())) {
+                jQuery("#RecordScoresGrid").scrollLeft((assignmentCell.position().left + assignmentCell.width() + 15) - containerWidth);
+            }
+        }
+    }
+}
+
+function FocusTableRowAndColumn(obj, focusedClass, unfocusedClass) {
+    var head = jQuery("#GridHead");
+    var table = head.closest("table");
+    var row = jQuery(obj).closest(".studRow");
+    var cell = jQuery(obj).closest(".studRow > td");
+
+    jQuery("." + focusedClass).addClass(unfocusedClass).removeClass(focusedClass);
+    row.addClass(focusedClass).removeClass(unfocusedClass);
+
+    if (jQuery(row).position().top <= jQuery("#RecordScoresGrid").scrollTop()) {
+        jQuery("#RecordScoresGrid").scrollTop(row.position().top - 2);
+    }
+
+    var dateRangeWidth = jQuery("#DateRangeCell").width();
+
+    if (jQuery(cell).position().left <= jQuery("#RecordScoresGrid").scrollLeft() + dateRangeWidth) {
+        jQuery("#RecordScoresGrid").scrollLeft(cell.position().left - 2 - dateRangeWidth);
+    } else {
+        var containerWidth = jQuery("#RecordScoresGrid").innerWidth();
+        if ((cell.position().left + cell.width()) > (containerWidth + jQuery("#RecordScoresGrid").scrollLeft())) {
+            jQuery("#RecordScoresGrid").scrollLeft((cell.position().left + cell.width() + 15) - containerWidth);
+        }
+    }
+}
+
+function FocusGridRow(source, focusedClass, unfocusedClass) {
+    jQuery("." + focusedClass).addClass(unfocusedClass).removeClass(focusedClass);
+    jQuery(source).closest("[class^='dxgvDataRow_']").addClass(focusedClass).removeClass(unfocusedClass);
+}
+
+jQuery(document).ready(function () {
+    jQuery(".HtmlPictureButtonContainer").on("hover", function () {
+        jQuery(this).toggleClass("dxbButtonHover_MetropolisBlue");
+    });
+});
+
+function ShowRecordGradesCommentPopup(sender, popupName) {
+    var vals = jQuery('[commentID=' + sender + ']').val().split('_');
+    var indicesToSelect = new Array();
+
+    CommentOptions.UnselectAll();
+
+    for (var i = 0; i < vals.length; i++) {
+        for (var j = 0; j < CommentOptions.GetItemCount(); j++) {
+            var item = CommentOptions.GetItem(j);
+            if (item.value == vals[i]) {
+                indicesToSelect.push(j);
+            }
+        }
+    }
+    CommentOptions.SelectIndices(indicesToSelect);
+
+    popupName.Show();
+}
+
+
+function toggleDivClass(divid, classOne, classTwo) {
+    if ($('#' + divid).attr('class') == classOne) {
+        $('#' + divid).addClass(classTwo)
+        $('#' + divid).removeClass(classOne)
+    }
+    else {
+        $('#' + divid).addClass(classOne)
+        $('#' + divid).removeClass(classTwo)
+    }
+}
+
+function ShowHiddenSliderSelector(sliderName) {
+    if (jQuery('#' + sliderName.name + ' .dxis-nbSelectedItem, #' + sliderName.name + ' .dxis-nbSelectedItem > div').length > 0) {
+        if ((jQuery('#' + sliderName.name + ' .dxis-nbSelectedItem, #' + sliderName.name + ' .dxis-nbSelectedItem > div').css('visibility') == 'hidden') && (sliderName.GetActiveItemIndex() == 0)) {
+            sliderName.RaiseActiveItemChanged();
+        }
+    }
+}
+
+function showPanel(showPanelName) {
+    jQuery("#" + showPanelName).siblings(".mas-tab-panel").each(function () {
+        jQuery(this).addClass("mas-tab-panel-hidden");
+    });
+    jQuery("#" + showPanelName).each(function () {
+        jQuery(this).removeClass("mas-tab-panel-hidden");
+        ASPxClientControl.AdjustControls(this);
+    });
+}
+
+function FixUrl(theUrl) {
+    if (window.location.href.charAt(window.location.href.length - 1) != '/' && theUrl.substring(0, 3) == '../') {
+        return theUrl.substring(3, theUrl.length)
+    }
+    else {
+        return theUrl;
+    }
+}
+
+function PublishEvent(s, e, eventName, propertyArgs, script) {
+    var scriptResults;
+    if (isFunction(script)) {
+        scriptResults = script(s, e);
+    }
+    data = {
+        args: propertyArgs,
+        caller: s,
+        callerevent: e,
+        editorValue: controlsValue(s),
+        publishedEvent: eventName,
+        ScriptResults: scriptResults,
+        ControlName: s.name
+    }
+    jQuery.publish(eventName, data);
+}
+
+function HandleSubscribedEvent(s, e, url, data, script, controlName, responseContainer) {
+    var scriptResults;
+    if (isFunction(script)) {
+        scriptResults = script(s, e, data);
+    }
+    if (url) {
+        var control = ASPxClientControl.GetControlCollection().GetByName(controlName);
+        var controlValue = null;
+        if (control) {
+            controlValue = controlsValue(control);
+        }
+        postData = {
+            SubsciberValue: controlValue,
+            PublisherPropertyArgs: data.args,
+            PublisherValue: data.editorValue,
+            ScriptResults: scriptResults
+        }
+        PostAndShowData(url, postData, responseContainer, null);
+    }
+
+
+}
+
+function isFunction(functionToCheck) {
+    var getType = {};
+    return functionToCheck && getType.toString.call(functionToCheck) === '[object Function]';
+}
+
+function PostAndShowData(url, data, containerName, successAction) {
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: data,
+        success: function (response, statusText, jqXHR) {
+            fillWithResponse(containerName, response, statusText, jqXHR);
+            if (successAction)
+                successAction(response);
+        }
+    });
+}
+
+function controlCallback(s, e, url, args, script, controlName, responseContainer, returnedFields, successScript) {
+	var scriptResults = script;
+
+    var controlValue = controlsValue(s);
+    var textValue = null;
+    if (s.GetInputElement) {
+        textValue = s.GetInputElement().value;
+    }
+
+    postData = {
+        CallerValue: controlValue,
+        CallerArgs: args,
+        ScriptResults: scriptResults,
+        ControlName: controlName,
+        CallerText: textValue
+    }
+
+    SetInputValues(returnedFields, postData)
+
+    var response = PostAndShowData(url, postData, responseContainer, successScript);
+
+    postData.Control = s;
+    postData.Event = e;
+    postData.ResponseContainter = responseContainer;
+    postData.response = response;
+
+    $.publish("_controlCallback_End", postData);
+
+}
+
+function SubmitFormToNewWindow(formName, windowName, url) {
+    if (ValidateControls($(formName)[0].id, null)) {
+        $(formName).attr('target', windowName);
+        $(formName).attr('action', url);
+        $(formName).submit();
+
+    }
+}
+
+function setBackingFieldFromControl(s, keyedName, fieldName) {
+
+    if (document.getElementById(keyedName)) {
+        document.getElementById(keyedName).value = s.GetValue();
+        return;
+    }
+
+    if (document.getElementById(fieldName)) {
+        document.getElementById(fieldName).value = s.GetValue();
+        return;
+    }
+
+}
+
+function SetInputValues(fieldList, data) {
+    if (fieldList == '') {
+        return;
+    } else {
+        var key = KeyedControlKey(data.ControlName);
+        var classname = KeyedControlClassName(data.ControlName);
+        fields = fieldList.split('|');
+        for (var i = 0; i < fields.length; i++) {
+            data[fields[i]] = GetControlValue(KeyedControlID(fields[i], classname, key));
+        }
+    }
+}
+
+
+function NullNumberKeyPress(s, e) {
+    var unicode = e.htmlEvent.charCode ? e.htmlEvent.charCode : e.htmlEvent.keyCode
+    if (!NumberKeyPressed(unicode)) {
+        ASPxClientUtils.PreventEventAndBubble(e.htmlEvent);
+        return false;
+    }
+    return true;
+}
+
+function NumberKeyPressed(unicode) {
+    if ((unicode == 8 || unicode == 46 || unicode == 9 || unicode == 37 || unicode == 39 || unicode == 45) || (unicode >= 48 && unicode <= 57)) {
+        return true;
+    }
+    return false;
+}
+
+function NullMoneyKeyUp(s, e) {
+    var unicode = e.htmlEvent.charCode ? e.htmlEvent.charCode : e.htmlEvent.keyCode
+    if (!NumberKeyUp(e.htmlEvent)) {
+        ASPxClientUtils.PreventEventAndBubble(e.htmlEvent);
+        return false;
+    }
+    var result = truncateDecimals(s.inputElement.value, 2);
+    if (result != s.inputElement.value) {
+        s.SetValue(result);
+    }
+
+    return true;
+}
+
+function NumberKeyUp(e) {
+    if (e.char) {
+        return (unicode == 8 || unicode == 46 || isNumber(e.char) || e.char == '.' || e.char == '-');
+    } else {
+        var unicode = e.which;
+        return (unicode == 8 || unicode == 190 || unicode == 110 || unicode == 45) || (unicode >= 48 && unicode <= 57) || (unicode >= 96 && unicode <= 105)
+    }
+}
+
+function truncateDecimals(num, digits) {
+    if (!isNumber(num)) {
+        return num;
+    }
+    var numS = num.toString();
+    var decPos = numS.indexOf('.');
+
+    if (decPos < 0 || decPos == (numS.length - 1)) {
+        return num
+    }
+
+    var firstPart = numS.substr(0, decPos);
+    var decPart = numS.substr(decPos + 1, digits);
+
+    finalResult = firstPart + "." + decPart;
+    return finalResult;
+}
+
+
+function hasDecimalPlaces(num, MaxDecPlaces) {
+    var numS = num.toString()
+    var decPos = numS.indexOf('.');
+    if (decPos < 0) {
+        return false;
+    }
+
+    var decPlaces = (numS.length - 1) - decPos;
+
+    if (decPlaces > MaxDecPlaces) {
+        return true;
+
+    }
+
+    return false;
+}
+
+function SelectPreviousItem(tabControl) {
+    if (tabControl.SelectionHistory && tabControl.SelectionHistory.length > 1 && tabControl.InCallback) {
+        tabControl.SelectionHistory.pop();
+        previousIndex = tabControl.SelectionHistory[tabControl.SelectionHistory.length - 1]
+        tabControl.SetActiveItemIndex(previousIndex, false);
+        tabControl.InCallback = false;
+    }
+}
+
+function Handle202(popupControl, respHtml, jqXHR) {
+    popupControl.SetContentHtml(respHtml);
+    popupControl.SetHeaderText(jqXHR.getResponseHeader(MAS_Server_Message));
+    popupControl.Show();
+    popupControl.BringToFront();
+    jQuery.publish(MAS_Server_Message, jqXHR.getResponseHeader(MAS_Server_Message));
+}
+
+
+var ResponseEndData = {
+    HeaderInfo: null,
+    ContainerName: null,
+    ResponseData: null,
+    StatuText: null
+
+}
+
+function RowEditGridFocuseRowChangeHandler(s, e) {
+    if (s.cpServerSetFocusedRow == 'False') {
+        s.PerformCallback();
+        s.SetHorizontalScrollPosition(0);
+    }
+    else {
+        s.cpServerSetFocusedRow = 'False'
+    }
+}
+
+function PublishGridEndCallback(sendingGrd) {
+    data = {
+        GridName: sendingGrd.name,
+        GridObject: sendingGrd,
+        EditMode: sendingGrd.cpCustomEditMode,
+        Command: sendingGrd.cpCallbackCommand,
+        Error: sendingGrd.cpCallbackError
+    }
+
+    publisher = {
+        PublishData: data,
+        Publish: function () {
+
+            jQuery.publish(MAS_Grid_Callback, this.PublishData);
+
+            if (this.PublishData.Error) {
+                jQuery.publish(MAS_Grid_Callback_Edit_Fail, this.PublishData);
+            }
+            else if (this.PublishData.EditMode) {
+                if (this.PublishData.Command === "CANCELEDIT") {
+                    jQuery.publish(MAS_Grid_Callback_Edit_Canceled, this.PublishData);
+                }
+                else if (this.PublishData.Command === "ADDNEWROW" || this.PublishData.Command === "STARTEDIT") {
+                    jQuery.publish(MAS_Grid_Callback_Edit_Show_Edit, this.PublishData);
+                }
+                else {
+                    jQuery.publish(MAS_Grid_Callback_Edit_End, this.PublishData);
+                }
+            }
+            else if (this.PublishData.Command === "DELETEROW") {
+                jQuery.publish(MAS_Grid_Callback_Edit_End, this.PublishData);
+            }
+        }
+    }
+
+    return publisher;
+}
+
+function changeRowFocused(gridName, rowIndex) {
+    if (gridName.cpServerSetFocusedRow) {
+        gridName.cpServerSetFocusedRow = 'False';
+    }
+    gridName.SetFocusedRowIndex(rowIndex);
+}
+
+function GridControlKeyDownHandler(e, s, i) {
+    if (!e.shiftKey && e.keyCode == 9) {
+        changeRowFocused(s, i)
+    }
+}
+
+function GridControlShiftKeyDownHandler(e, s, i) {
+    if (e.shiftKey && e.keyCode == 9) {
+        changeRowFocused(s, i)
+    }
+}
+
+function SetFocusedRowByKey(grid, rowKey, procState) {
+    if (grid) {
+        var origProcState = grid.cpProcessingState;
+        if (!procState) { procState = false; }
+        grid.cpProcessingState = procState;
+        var foundKey = false;
+        for (i = 0; i < grid.GetVisibleRowsOnPage(); i++) {
+            if (grid.GetRowKey(i) === rowKey) {
+                grid.SetFocusedRowIndex(i);
+                foundKey = true;
+                break;
+            }
+        }
+        if (!foundKey) {
+            grid.SetFocusedRowIndex(-1);
+        }
+        grid.cpProcessingState = origProcState;
+    }
+}
+
+function KeyboardEventHandler(e, keyCode, shift, ctrl, alt, action, control) {
+    if (shift && !e.shiftKey) { return; }
+    if (ctrl && !e.ctrlKey) { return; }
+    if (alt && !e.altKey) { return; }
+    if ((e.keyCode == keyCode) && action) {
+        if (control && ASPxClientControl.GetControlCollection().GetByName(control).OnLostFocus) {
+            ASPxClientControl.GetControlCollection().GetByName(control).OnLostFocus();
+        }
+        action();
+    }
+}
+
+function SubmitReportDesigner(report, validationElement, validationGroup, reportData, afterCallback) {
+    if (ValidateControls(validationElement, validationGroup)) {
+        if (reportData) {
+            var data = reportData();
+            report.PerformCallback(data);
+        }
+        else {
+            report.PerformCallback();
+        }
+
+        if (afterCallback) {
+            afterCallback();
+        }
+
+    }
+}
+
+
+function GetControlValue(devExpName) {
+    var devExpControl = ASPxClientControl.GetControlCollection().GetByName(devExpName);
+    if (devExpControl) {
+        return controlsValue(devExpControl);
+    } else {
+        var el = document.getElementById(devExpName);
+        if (el) {
+            return el.value;
+        } else {
+            return null;
+        }
+    }
+}
+
+function GetKeyedControlID(otherControlName, fieldName) {
+    var key = KeyedControlKey(otherControlName);
+    var classname = KeyedControlClassName(otherControlName);
+
+    return KeyedControlID(fieldName, classname, key);
+}
+
+function KeyedControlID(fieldName, className, key) {
+    if (key) {
+        var selected = $("[id*='" + className + ":" + fieldName + ":" + key + ":" + "']");
+
+        for (var i = 0; i < selected.length; i++) {
+            var id = selected[i].id;
+            if (id && id.substring(id.length - 5, id.length) == '~mkc~') {
+                return id;
+            }
+        }
+        return null;
+    } else {
+        return fieldName;
+    }
+}
+
+function KeyedControlKey(controlName) {
+    if (controlName != null && controlName.indexOf(":~mkc~") != -1) {
+        var str = controlName;
+        str = str.slice(str.indexOf(":") + 1, str.length)
+        str = str.slice(str.indexOf(":") + 1, str.length)
+        str = str.slice(0, str.indexOf(":"));
+        return str;
+    }
+
+    return null;
+}
+
+function KeyedControlClassName(controlName) {
+    if (controlName != null && controlName.indexOf(":~mkc~") != -1) {
+        var str = controlName;
+        str = str.slice(0, str.indexOf(":"))
+        return str;
+    }
+    return null;
+}
+
+function KeyedControlControlType(controlName) {
+    if (controlName != null && controlName.indexOf(":~mkc~") != -1) {
+        var str = controlName;
+        str = str.slice(str.indexOf(":") + 1, str.length)
+        str = str.slice(str.indexOf(":") + 1, str.length)
+        str = str.slice(str.indexOf(":") + 1, str.length)
+        str = str.slice(0, str.indexOf(":"));
+        return str;
+    }
+    return null;
+}
+
+function KeyedControlField(controlName) {
+
+    var str = controlName;
+    if (controlName != null && controlName.indexOf(":~mkc~") != -1) {
+        str = str.slice(str.indexOf(":") + 1, str.length)
+        str = str.slice(0, str.indexOf(":"));
+
+    }
+
+    return str;
+}
+
+function controlsValue(s) {
+    if (s.GetDate) {
+        var jsonDate = null;
+        var theDate = s.GetDate();
+        if (theDate != null) {
+            jsonDate = theDate.toJSON();
+        }
+
+        return jsonDate;
+	}
+	else if (s.GetSelectedValues) {
+		return s.GetSelectedValues();
+	}
+	else if (s.GetValue) {
+        return s.GetValue();
+	}
+    return null;
+}
+
+function GridModelEditmodesButtonHandler(GridName, customEditMode, keepFormOpen) {
+    var grid = ASPxClientControl.GetControlCollection().GetByName(GridName);
+    var _container = ASPxClientControl.GetControlCollection().GetByName('Grid_Edit_FormPanel_Panel');
+    var _el = null;
+    if (_container) _el = _container.GetMainElement();
+    if (grid && ASPxClientEdit.ValidateEditorsInContainer(_el)) {
+        if (keepFormOpen) {
+            grid.isBeginAddNew = true;
+        }
+        grid.cpCustomEditMode = customEditMode;
+        grid.UpdateEdit();
+        grid = null;
+    }
+}
+
+function AddAvailableGridsSelectedRowsToSelectedGrid(s, e, availableGrid, selectedGrid) {
+    var selectedkeys = availableGrid.GetSelectedKeysOnPage();
+    selectedGrid.cpAvailableSelected = selectedkeys.join();
+    SubmitGrid(selectedGrid, "AddMultiple", null, null);
+}
+
+function MakeUri(action) {
+    return getLocation() + "/" + action;
+}
+
+function getLocation() {
+    var l = document.createElement("a");
+    l.href = window.location.href;
+    return l.pathname;
+};
+
+function DXControl(name) {
+    return ASPxClientControl.GetControlCollection().GetByName(name);
+}
+
+function ForceSplitterAdjustSize(splitterName) {
+    var _splitter = DXControl(splitterName);
+    if (_splitter) {
+        if (_splitter.UpdateAutoSizePanes) {
+            try {
+                _splitter.UpdateAutoSizePanes();
+                _splitter.AdjustControl();
+            } catch (err) { }
+        }
+    }
+}
+
+var SetupSplitter = function (topics, data) {
+    if (_activeSplitterName) {
+        var ctl = DXControl(_activeSplitterName);
+        if (ctl) {
+            if (ctl.UpdateAutoSizePanes) {
+                try {
+                    ctl.UpdateAutoSizePanes();
+                } catch (err) { }
+            }
+        }
+    }
+}
+
+var _activeSplitterName = null;
+var splitterInit = function (topics, data) {
+    _activeSplitterName = data.split('|')[0];
+}
+
+function CallSoapService(webServiceURL, soapMessage, raiseEvents, OnSuccessMethod, OnError, ResultParser) {
+    if (webServiceURL.toLowerCase().indexOf(window.location.host.toLowerCase()) == -1) {
+        if (OnError) {
+            OnError(null, "error", 'The host for the Gradebook Services URL must be the same as the application.');
+            return false;
+        }
+    }
+    else {
+        var xhr = $.ajax({
+            url: webServiceURL,
+            type: "POST",
+            dataType: "xml",
+            data: soapMessage,
+            global: raiseEvents,
+            processData: false,
+            contentType: "text/xml; charset=\"utf-8\"",
+            success: function (data, status) {
+                if (ResultParser) {
+                    data = ResultParser(data);
+                } else {
+                    try {
+                        data = data.childNodes[0].childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeValue;
+                    }
+                    catch (err) {
+                        try {
+                            data = data.childNodes[0].childNodes[0].childNodes[0].childNodes[0].nodeValue;
+                        }
+                        catch (err2) {
+                            data = err2.message;
+                        }
+
+                    }
+
+                }
+                OnSuccessMethod(data, status);
+            },
+            error: OnError
+        });
+        return xhr;
+    }
+}
+
+Date.prototype.addDays = function (days) {
+    this.setDate(this.getDate() + parseInt(days));
+    return this;
+}
+
+var FilterFix_HandleGridCallback = function (topic, data) {
+    if (data.GridObject.lpBeginCallbackCommand === "SHOWFILTERCONTROL") {
+        if (data.GridObject.GetFilterControl() != null) {
+            var filterControl = data.GridObject.GetFilterControl();
+            filterControl.BeginCallback.AddHandler(FilterBeginCallback_Handler)
+            filterControl.GridObject = data.GridObject;
+        }
+    }
+}
+
+var FilterBeginCallback_Handler = function (s, e) {
+
+    var originalGetCallbackParams = s.GetCallbackParams;
+    s.GetCallbackParams = function () {
+
+        var params = originalGetCallbackParams.apply(s);
+
+        if (!s.GridObject.BeginCallback.IsEmpty()) {
+            var args = new MVCxClientBeginCallbackEventArgs();
+            s.GridObject.BeginCallback.FireEvent(s.GridObject, args);
+            for (var key in args.customArgs) {
+                params[key] = args.customArgs[key];
+            }
+        }
+        return params;
+    }
+}
+
+if (jQuery.subscribe) {
+    jQuery.subscribe(MAS_Grid_Callback, FilterFix_HandleGridCallback);
+}
+
+function CurrencyFormatter() {
+	return new Intl.NumberFormat('en-US', {
+		style: 'currency',
+		currency: 'USD',
+		minimumFractionDigits: 2,
+		maximumFractionDigits: 2
+	});
+}
+</script>
+    <script type="text/javascript">(function (window, undefined) {
+    if (window.jQuery) {
+        window.SessionTimeout = new function () {
+            var _timeoutPopup = null;
+            var _expireURL = null;
+            var _aliveURL = null;
+            var _loadAliveURL = null;
+            var _clientCookieName = null;
+            var _popupTimer = null;
+            var _countDownTimer = null;
+            var _timeLeft = 60;
+            var _loadTimer = null;
+            var _loadTimeout = 900000.0;
+            var _countDownMax = 60000.0; //this gives one minute to count down to the user
+
+            //call to initialize with custom routes
+            var SetRoutes = function (expireURL, stayAliveURL, loadAliveURL, loadTimeout) {
+                if (expireURL != '') _expireURL = expireURL;
+                if (stayAliveURL != '') _aliveURL = stayAliveURL;
+                if (loadAliveURL != '') _loadAliveURL = loadAliveURL;
+                _loadTimeout = loadTimeout;
+            }
+
+            //call from each ajax-complete event
+            var IsServerExpired = false;
+
+            var ProcessCookie = function (cookieName, paramName, clientCookieName) {
+                //1. get expire time
+                
+                var __expireTime = Date.now(); //very first thing.. determine when the session expires on the client clock
+                _clientCookieName = clientCookieName;
+                var __length = window.ReadCookieValue(cookieName, paramName);
+                if (__length != null) {
+                    var __serverEndedValue = (0 - 1); //-1 indicates the server is logged off
+                    if (Number(__length) == __serverEndedValue) {
+                        window.SessionTimeout.IsServerExpired = true;
+                        StopTimers();
+                    } else {
+                        __expireTime += Number(__length);
+                        //2. update client side cookie
+                        document.cookie = clientCookieName + '=ClientTime=' + __expireTime + '; path=/';
+
+                        //3. stop and reinstate timeout
+                        _resetTimers();
+                    }
+                }
+            }
+
+            //used internally to clear timers, can be called externally
+            var StopTimers = function () {
+                window.clearTimeout(_popupTimer);
+                window.clearTimeout(_loadTimer);
+                window.clearTimeout(_countDownTimer);
+            }
+
+            //used internally. milliseconds until countdown should start
+            var _getTimeRemaining = function () {
+                var __ret = 1140000.0; //default 19 minutes (?cookie maybe not set yet)
+                if (_clientCookieName) {
+                    //read the client side cookie, if client clock has passed the value in the cookie then timed out
+                    var __expireTime = window.ReadCookieValue(_clientCookieName, 'ClientTime');
+                    if (__expireTime) __ret = (Number(__expireTime) - _countDownMax) - Date.now();
+                }
+                return (__ret < 500.0 ? 0.0 : __ret)
+            }
+
+            //used internally. increments count down or restarts if cookie has been updated (externally or by keepalive callback)
+            var _updateCountDown = function () {
+                if (_getTimeRemaining()) {
+                    _resetTimers();  //cookie updated or event fired prematurely, reschedule
+                } else {
+                    //begin or update count down
+                    var min = Math.floor(_timeLeft / 60);
+                    var sec = _timeLeft % 60;
+                    if (sec < 10) sec = '0' + sec;
+                    var _el = document.getElementById('CountDownHolder');
+                    if (_el) _el.innerHTML = min + ':' + sec;
+                    if (_timeLeft > 0) { //time remaining
+                        _timeLeft--;
+                        _countDownTimer = window.setTimeout(function () { window.SessionTimeout._updateCountDown(); }, 1000.0);
+                    } else {
+                        StopTimers(); //count down = 0, expire and redirect
+                        if (!window.SessionTimeout.IsServerExpired) {
+                            if (_expireURL) window.location = _expireURL;
+                        }
+                    }
+                }
+            }
+
+            //used internally, does one last timeout verfication before actually showing the count down popup
+            //this is the method called by the timer timeout
+            var ShowPopup = function () {
+                StopTimers();
+                if (!window.SessionTimeout.IsServerExpired) {
+                    if (_getTimeRemaining()) {
+                        _resetTimers();  //cookie updated or event fired prematurely, reschedule
+                    } else {
+                        //start count down
+                        _timeLeft = 60;
+                        _updateCountDown();
+                        if (_timeoutPopup) _timeoutPopup.Show();
+                    }
+                }
+            }
+
+            //used internally to query the load balancer (note: must not effect session timeout on the server - ignore cookies)
+            var PulseLoadBalance = function () {
+                jQuery.ajax({
+                    type: "GET",
+                    url: _loadAliveURL,
+                    data: null,
+                    global: false
+                }); //keep the load balancer alive
+                _resetTimers(); //restart the process if required
+            }
+
+            //used internally. clears existing timers, hides the popup (if shown), and re-initiates the timeouts for any new/remaining time
+            var _resetTimers = function () {
+                StopTimers();
+                if (_timeoutPopup) { _timeoutPopup.Hide() };
+                if (!window.SessionTimeout.IsServerExpired) {
+                    var _remaining = _getTimeRemaining();
+                    _popupTimer = window.setTimeout(function () { window.SessionTimeout.ShowPopup(); }, _remaining); //if remaining time is zero popup will show immediatly, otherwise at the scheduled time.
+                    if ((_loadAliveURL) && ((_remaining + _countDownMax) > _loadTimeout)) {
+                        _loadTimer = window.setTimeout(function () { window.SessionTimeout.PulseLoadBalance(); }, (_loadTimeout - _countDownMax));
+                    }
+                }
+            }
+
+            //called in the popup control's init event.  this registers that popup as the control that will be shown
+            var SchedulePopup = function (timeoutPopup) {
+                _timeoutPopup = timeoutPopup;
+                _resetTimers();
+            }
+            
+            //called by the Ok button in the count down popup.
+            //the AJAX completed event, a result of this call, may contain an updated session timeout effectively and by nature restarting this whole process.
+            var SendKeepAlive = function () {
+                jQuery.get(_aliveURL);
+            }
+
+            return {
+                SetRoutes: SetRoutes,
+                SchedulePopup: SchedulePopup,
+                ShowPopup: ShowPopup,
+                SendKeepAlive: SendKeepAlive,
+                ProcessCookie: ProcessCookie,
+                StopTimers: StopTimers,
+                PulseLoadBalance: PulseLoadBalance,
+                _updateCountDown: _updateCountDown,
+                IsServerExpired: IsServerExpired
+            };
+        }
+    } else {
+        window.SessionTimeout = null;
+        var _err = new Error();
+        _err.number = -1;
+        _err.name = "Initialization Error";
+        _err.message = "Unable to initialize SessionTimeout script.";
+        _err.description = "jQuery has not been initalized prior to initializing SessionTimeout.";
+        throw _err;
+    }
+})(window);
+jQuery(document).ready(function () {
+    SessionTimeout.SetRoutes('/Mannford/Gradebook/Login/Expire','/Mannford/Gradebook/Login/KeepAlive','/Mannford/Gradebook/login/keepalive',900000);
+    jQuery(document).bind('ajaxSend', function () {
+        SessionTimeout.ProcessCookie('UserAuthenticationStatusCookie_v2.2','ClientSessionLength','MASClientExpire_v2.2');
+    });
+    SessionTimeout.SendKeepAlive();
+    var cookieTestTimeoutLength = 30000;
+    function MASCookieTest() {
+        var sessionLength = ReadCookieValue('UserAuthenticationStatusCookie_v2.2', 'ClientSessionLength');
+        if (sessionLength == null) {
+            window.location.href = '/Mannford/Gradebook/Login/Abandoned?ReturnUrl=%2FMannford%2Fgradebook%2Fstudentportal';
+        }
+        if (sessionLength > 0) {
+            setTimeout(function () { MASCookieTest(); }, cookieTestTimeoutLength);
+        } else {
+            window.location.href = '/Mannford/Gradebook/Login/Abandoned?ReturnUrl=%2FMannford%2Fgradebook%2Fstudentportal';
+        }
+    }
+    setTimeout(function () { MASCookieTest(); }, cookieTestTimeoutLength);
+});
+</script>
+    <script id="dxis_486325990" src="/Mannford/Gradebook/DXR.axd?r=1_11,1_64,1_12,1_255,1_13,1_14,1_15,1_16,1_20,1_183,1_184,17_0,1_23,1_182,17_24,1_19,1_213,1_226,1_227,1_228,1_212,1_220,1_216,1_221,1_21,1_22,1_222,1_217,1_223,1_218,1_219,1_214,1_224,1_225,1_211,1_230,1_239,1_241,1_242,1_229,1_234,1_235,1_236,1_215,1_231,1_232,1_233,1_237,1_238,1_240,1_243,17_49,17_50,17_2,1_17,1_24,1_33,1_34,1_39,1_41,17_12,17_9,1_190,1_253,17_1,7_7,7_5,7_6,7_9,7_4,17_30,1_188,4_0,1_18,5_1,5_2,4_115,4_98,4_100,4_99,4_101,4_102,4_105,4_108,4_109,4_107,4_106,4_104,4_103,4_110,4_1,4_34,4_113,4_3,4_31,4_2,4_24,4_22,4_23,4_27,4_28,4_32,4_29,4_35,4_47,4_48,4_42,4_80,4_36,4_37,4_38,4_39,4_40,4_43,4_44,4_45,4_46,4_49,4_50,4_51,4_52,4_41,4_53,4_54,4_55,4_56,4_57,4_58,4_59,4_60,4_61,4_62,4_67,4_68,4_69,4_70,4_71,4_72,4_73,4_74,4_75,4_76,4_77,4_63,4_64,4_65,4_66,4_78,4_79,4_86,4_87,4_89,4_93,4_88,4_90,4_91,4_81,4_84,4_83,4_85,4_82,4_15,4_16,4_17,4_18,4_19,4_20,4_92,4_25,4_26,4_30,4_14,4_6,4_8,4_7,4_9,4_10,4_11,4_21,4_12,4_4,4_5,4_13,17_4,4_94,4_95,1_186,1_193,4_96,4_97,1_199,1_200,1_43,4_33,1_60,1_185,1_205,17_25,1_194,17_18,1_203,17_20,1_198,1_204,17_17,17_22,1_192,17_19,1_61,1_195,1_189,17_16,1_197,1_40,1_191,17_43,1_202,1_196,17_21,1_66,1_48,1_9,17_8,1_27,1_31,17_36,1_55,17_35,1_54,1_53,17_34,1_46,1_47,1_52,17_6,1_51,17_15,1_59,1_57,17_39,1_56,17_40,1_58,17_41,17_42,17_3,1_49,17_10,1_35,17_11,1_63,1_62,1_50,1_38,17_44,17_13,17_14,1_67,10_0,10_1,10_2,10_3,10_4,17_23-UjLpp&amp;p=89c3fb1d"></script>
+    <script type="text/javascript">//ADDS METHODS TO THE jMAS CLIENT SIDE JAVASCRIPT OBJECT FOR
+//RETREIVE PARENT ELEMENT SIZES AND SIZING CONTROLS TO THEIR CONTAINERS
+//WHERE DEVEXPRESS CONTROLS REFERENCE CLASS mas-stretchDX AND STANDARD HTML
+//ELEMENTS REFERENCE CLASS mas-stretch
+
+(function (window, undefined) {
+    if (window.jQuery) {
+        if (!window.jMAS) {
+            var _jMas = new function () { };
+            window.jMAS = _jMas
+        }
+        //extend jMAS
+
+        //returns the combined height of all visible siblings in the parent container
+        function siblingHeight(el) {
+            var _iRet = new Number(0);
+            $(el).siblings().each(function () {
+                if (this.type) {
+                    if (this.type.toLowerCase() != "hidden") {
+                        if ($(this).css("display") != "none")
+                            _iRet += this.clientHeight;
+                    }
+                } else {
+                    if ($(this).css("display") != "none" && $(this).css("font-size") != "0px" && $(this).css("line-height") != "0px")
+                        _iRet += this.clientHeight;
+                }
+            });
+            return _iRet;
+        }
+        window.jMAS.siblingHeight = siblingHeight;
+
+        //traverses parents to find first fixed height or width calculating padding along the way.
+        function parentSize(el) {
+            var _pH = parentHeight(el);
+            var _pW = parentWidth(el);
+
+            return { height: _pH.height, width: _pW.width, offsetWidth: _pW.offsetWidth, offsetHeight: _pH.offsetHeight };
+        }
+        window.jMAS.parentSize = parentSize;
+
+        //traverses parents to find first fixed height calculating padding along the way.
+        function parentHeight(el) {
+                var _ret = { height: new Number(el.clientHeight), offsetHeight: siblingHeight(el) };
+                var _bHeight = false;
+                for (var ep = el.parentElement; (ep && (!_bHeight)); ep = ep.parentElement) {
+                    if (!_bHeight && ep.style && ep.style.height != null) {
+                        if (ep.style.height.match("^[0-9\.]+px$")) {
+                            _bHeight = true;
+                            _ret.height = new Number(ep.style.height.replace("px", ""));
+                        } else {
+                            _ret.height = new Number(ep.clientHeight);
+                            if (ep.tagName.toLowerCase() == "td") {
+                                _bHeight = true;
+                            } else {
+                                //accum the height of all siblings in the container
+                                _ret.offsetHeight += siblingHeight(ep);
+                            }
+                        }
+
+                        _ret.offsetHeight += getPixels($(ep).css("margin-top"));
+                        _ret.offsetHeight += getPixels($(ep).css("padding-top"));
+                        _ret.offsetHeight += getPixels($(ep).css("margin-bottom"));
+                        _ret.offsetHeight += getPixels($(ep).css("padding-bottom"));
+                    }
+                }
+                if (_ret.height <= _ret.offsetHeight) _ret.offsetHeight = new Number(0);
+                _ret.height -= _ret.offsetHeight;
+                return _ret;
+//            if (el.clientHeight > 0) {
+//            } else {
+//                return { height: new Number(0), offsetHeight: new Number(0) };
+//            }
+        }
+        window.jMAS.parentHeight = parentHeight;
+
+        //traverses parents to find first fixed width calculating padding along the way.
+        function parentWidth(el) {
+            if (el.clientWidth > 0) {
+                var _ret = { width: new Number(el.clientWidth), offsetWidth: new Number(0) };
+                var _bWidth = false;
+                for (var ep = el.parentElement; (ep && (!_bWidth)); ep = ep.parentElement) {
+                    if (!_bWidth && ep.style && ep.style.width != null) {
+                        if (ep.style.width.match("^[0-9\.]+px$")) {
+                            _bWidth = true;
+                            _ret.width = new Number(ep.style.width.replace("px", ""));
+                        } else {
+                            _ret.width = new Number(ep.clientWidth);
+                            _bWidth = (ep.tagName.toLowerCase() == "td")
+                        }
+
+                        _ret.offsetWidth += getPixels($(ep).css("margin-left"));
+                        _ret.offsetWidth += getPixels($(ep).css("padding-left"));
+                        _ret.offsetWidth += getPixels($(ep).css("margin-right"));
+                        _ret.offsetWidth += getPixels($(ep).css("padding-right"));
+                    }
+                }
+                _ret.width -= _ret.offsetWidth;
+                return _ret;
+            } else {
+                return { width: new Number(0), offsetWidth: new Number(0) };
+            }
+        }
+        window.jMAS.parentWidth = parentWidth;
+
+        //finds all child elements of class mas-stretchDX and sets sizes to their parents' size
+        function stretchDXChildren(el) {
+            if (ASPxClientControl) {
+                //height
+                $(el).find(".mas-stretchDX,.mas-stretchDX-vertical").each(function () {
+                    var ctl = ASPxClientControl.GetControlCollection().GetByName(_getDXNameFromElement(this.id));
+                    if (ctl) {
+                        if (ctl.SetHeight) {
+                            var curSize = ctl.GetHeight();
+                            var newSize = parentHeight(this);
+                            if (newSize.height > 2 && newSize.height != curSize) ctl.SetHeight(newSize.height - 2);
+                        }
+                    }
+                });
+                //width
+                $(el).find(".mas-stretchDX,.mas-stretchDX-horizontal").each(function () {
+                    var ctl = ASPxClientControl.GetControlCollection().GetByName(_getDXNameFromElement(this.id));
+                    if (ctl) {
+                        if (ctl.SetWidth) {
+                            var curSize = ctl.GetWidth();
+                            var newSize = parentWidth(this);
+                            if (newSize.width > 2 && newSize.width != curSize) ctl.SetWidth(newSize.width - 2);
+                        }
+                    }
+                    //is control a tab page control - of so set its content width when in litemode
+                    $(this).children("div.dxtc-content").each(function () { $(this).css("width", ($(this.parentElement).width() - 2).toString() + "px"); });
+                });
+            }
+        }
+        window.jMAS.stretchDXChildren = stretchDXChildren;
+
+        //trims any known DevExpress formating from a control name.  ie; PopUpWindow places suffix PW-# to the control name for the element name.
+        function _getDXNameFromElement(elementID) {
+            if (elementID) {
+                if (elementID.match("_PW-[0-9]*$")) {
+                    return elementID.replace(elementID.match("_PW-[0-9]*$")[0], "");
+                } else {
+                    return elementID;
+                }
+            } else {
+                return new String();
+            }
+        }
+
+        //finds all child elements of mas-stretch or mas-stretchDX class and sets sizes to their parents' size
+        function stretchChildren(el) {
+            $(el).find(".mas-stretch").each(function () {
+                var newSize = parentHeight(this)
+                _varMinus = new Number(0);
+
+                //height minus padding
+                _varMinus += getPixels($(this).css("margin-top"));
+                _varMinus += getPixels($(this).css("padding-top"));
+                _varMinus += getPixels($(this).css("margin-bottom"));
+                _varMinus += getPixels($(this).css("padding-bottom"));
+                if (newSize.height > 2) $(this).css("height", (newSize.height - _varMinus).toString() + "px");
+            });
+            $(el).find(".mas-stretch,.mas-stretch-horizontal").each(function () {
+                var newSize = parentWidth(this);
+                _varMinus = new Number(0);
+
+                //width minus padding
+                _varMinus += getPixels($(this).css("margin-left"));
+                _varMinus += getPixels($(this).css("padding-left"));
+
+                if (newSize.width > 2) $(this).css("width", (newSize.width - _varMinus).toString() + "px");
+            });
+            stretchDXChildren(el);
+        }
+        window.jMAS.stretchChildren = stretchChildren;
+
+        function getPixels(val) {
+            if (val.toString().match("^[0-9\.]+px$")) {
+                return (new Number(val.toString().replace("px", "")));
+            } else {
+                return new Number(0);
+            }
+        }
+        window.jMAS.getPixels = getPixels;
+
+        //document loaded or resized
+        var _windowSizeTimer = null;
+        function _handleWindowLoad() {
+            window.jMAS.stretchChildren(document.body);
+            _windowSizeTimer = null;
+        }
+        function _handleWindowSize() {
+            if (!_windowSizeTimer) {
+                _windowSizeTimer = setTimeout(_handleWindowLoad, 100);
+            }
+        }
+        $(document).ready(function (ev) { _handleWindowLoad(); $(window).resize(_handleWindowSize); });
+
+    } else {
+        window.jMAS = null;
+        var _err = new Error();
+        _err.number = -1;
+        _err.name = "Initialization Error";
+        _err.message = "Unable to initialize jMAS script.";
+        _err.description = "jQuery has not been initalized prior to initializing jMAS.";
+        throw _err;
+    }
+})(window);
+
+
+function ResizeControl (s, e) {
+      if (window.jMAS) {
+        if (window.jMAS.stretchDXChildren) {
+          var el = null;
+          if (e.pane) {
+            el = e.pane.helper.GetContentContainerElement();
+          } else if (s.GetWindowElement) {
+            if (s.GetWindowElement[-1]) {
+              el = s.GetWindowElement[-1];
+            } else {
+              el = document.body;
+            }
+          } else {
+            el = document.body;
+          }
+          window.jMAS.stretchChildren(el);
+          el = null;
+        }
+      }
+    }</script>
+</head>
+<body>
+<div id="MASMessagePopupControl_PW-1" class="dxpcLite_Moderno drag dxpclW" style="height:128px;width:322px;-webkit-user-select:none;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header mas-popup-header mas-popup-header-close dxpc-withBtn">
+			<div class="dxpc-closeBtn">
+				<img class="dxWeb_pcCloseButton_Moderno" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="Close" />
+			</div><div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam">Message</span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="mas-popup-content-y dxpc-content" style="padding-left:4px;padding-right:4px;padding-top:4px;padding-bottom:4px;">
+				
+			</div>
+		</div><div class="dxpc-footer">
+<div style='width:100%;display:block;float:none;overflow:hidden;'><div style='display:inline;float:right;padding:4px;'><div class="dxbButton_Moderno dxbButtonSys dxbTSys" id="btnMASMessagePopupControl_Deny" style="height:24px;width:82px;-webkit-user-select:none;">
+	<div class="dxb">
+		<div class="dxb-hbc">
+			<input id="btnMASMessagePopupControl_Deny_I" class="dxb-hb" value="No" type="button" name="btnMASMessagePopupControl_Deny" />
+		</div><span class="dx-vam">No</span>
+	</div>
+</div><script id="dxss_1149909389">
+<!--
+ASPx.AddHoverItems('btnMASMessagePopupControl_Deny',[[['dxbButtonHover_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddPressedItems('btnMASMessagePopupControl_Deny',[[['dxbButtonPressed_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddDisabledItems('btnMASMessagePopupControl_Deny',[[['dxbDisabled_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddSelectedItems('btnMASMessagePopupControl_Deny',[[['dxbf'],[''],['CD']]]);
+ASPx.createControl(MVCxClientButton,'btnMASMessagePopupControl_Deny','',{'useSubmitBehavior':false},{'Click':function(s,e) { ASPxClientControl.GetControlCollection().GetByName('MASMessagePopupControl').Hide(); }});
+
+//-->
+</script></div>
+<div style='display:inline;float:right;padding:4px;'><div class="dxbButton_Moderno dxbButtonSys dxbTSys" id="btnMASMessagePopupControl_Confirm" style="height:24px;width:82px;-webkit-user-select:none;">
+	<div class="dxb">
+		<div class="dxb-hbc">
+			<input id="btnMASMessagePopupControl_Confirm_I" class="dxb-hb" value="Yes" type="button" name="btnMASMessagePopupControl_Confirm" />
+		</div><span class="dx-vam">Yes</span>
+	</div>
+</div><script id="dxss_1817527643">
+<!--
+ASPx.AddHoverItems('btnMASMessagePopupControl_Confirm',[[['dxbButtonHover_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddPressedItems('btnMASMessagePopupControl_Confirm',[[['dxbButtonPressed_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddDisabledItems('btnMASMessagePopupControl_Confirm',[[['dxbDisabled_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddSelectedItems('btnMASMessagePopupControl_Confirm',[[['dxbf'],[''],['CD']]]);
+ASPx.createControl(MVCxClientButton,'btnMASMessagePopupControl_Confirm','',{'useSubmitBehavior':false},{'Click':function(s, e) {(function(s,e) { ASPxClientControl.GetControlCollection().GetByName('MASMessagePopupControl').Hide(); })(s, e);
+if (MASMessagePopupControl.onConfirm) MASMessagePopupControl.onConfirm()}});
+
+//-->
+</script></div>
+</div>
+
+		</div>
+	</div>
+</div><div id="MASMessagePopupControl_DXPWMB-1" class="dxpcModalBackLite_Moderno" style="z-index:9999;">
+
+</div><script id="dxss_1533798267">
+<!--
+ASPx.AddHoverItems('MASMessagePopupControl',[[['dxpc-closeBtnHover'],[''],['HCB-1']]]);
+ASPx.createControl(MVCxClientPopupControl,'MASMessagePopupControl','',{'appearAfter':500,'popupAnimationType':'fade','closeAction':'CloseButton','popupHorizontalAlign':'WindowCenter','popupVerticalAlign':'WindowCenter','isWindowDragging':true,'allowDragging':true,'modal':true,'width':322,'widthFromServer':true,'height':128});
+
+//-->
+</script>
+	<div id="popup_TimeoutPopup_PW-1" class="dxpcLite_Moderno dxpclW" style="height:175px;width:250px;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header mas-popup-header mas-popup-header-noclose">
+			<div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam">Session Expiring</span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="mas-popup-content-y dxpc-content" style="padding-left:4px;padding-right:4px;padding-top:4px;padding-bottom:4px;">
+				Your session is about to expire.<br /><br /><span id="CountDownHolder"></span><br /><br />Click OK to continue your session.
+			</div>
+		</div><div class="dxpc-footer">
+<div id='btnbtnClientTimeoutOK-editformbutton'><div class="dxbButton_Moderno dxbButtonSys dxbTSys" id="btnbtnClientTimeoutOK" style="width:100%;-webkit-user-select:none;">
+	<div class="dxb">
+		<div class="dxb-hbc">
+			<input id="btnbtnClientTimeoutOK_I" class="dxb-hb" value="OK" type="button" name="btnbtnClientTimeoutOK" />
+		</div><span class="dx-wrap">OK</span>
+	</div>
+</div><script id="dxss_1995146352">
+<!--
+ASPx.AddHoverItems('btnbtnClientTimeoutOK',[[['dxbButtonHover_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddPressedItems('btnbtnClientTimeoutOK',[[['dxbButtonPressed_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddDisabledItems('btnbtnClientTimeoutOK',[[['dxbDisabled_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddSelectedItems('btnbtnClientTimeoutOK',[[['dxbf'],[''],['CD']]]);
+ASPx.createControl(MVCxClientButton,'btnbtnClientTimeoutOK','',{'encodeHtml':false,'useSubmitBehavior':false,'validateInvisibleEditors':true},{'Click':function(s, e) { SessionTimeout.SendKeepAlive(); }});
+
+//-->
+</script></div>
+		</div>
+	</div>
+</div><div id="popup_TimeoutPopup_DXPWMB-1" class="dxpcModalBackLite_Moderno" style="z-index:9999;">
+
+</div><script id="dxss_1406165799">
+<!--
+ASPx.createControl(MVCxClientPopupControl,'popup_TimeoutPopup','',{'appearAfter':500,'popupAnimationType':'fade','closeAction':'None','popupHorizontalAlign':'WindowCenter','popupVerticalAlign':'WindowCenter','modal':true,'width':250,'widthFromServer':true,'height':175},{'Init':function(s, e) {SessionTimeout.SchedulePopup(s);}});
+
+//-->
+</script>
+
+	<style type="text/css">
+		#Standard_Nav a {
+			width: auto !important;
+			margin-right: 6px;
+		}
+
+			#Standard_Nav a:last-child {
+				margin-right: 0px !important;
+			}
+	</style>
+
+<table class="dxlpLoadingPanel_Moderno dxlpControl_Moderno" id="loadingPanel_GlobalLoadingPanel" style="position:absolute;left:0px;top:0px;z-index:30000;display:none;">
+	<tr>
+		<td class="dx" style="padding-right:0px;"><img class="dxlp-loadingImage dxlp-imgPosLeft" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="" style="vertical-align:middle;" /></td><td class="dx" style="padding-left:0px;"><span id="loadingPanel_GlobalLoadingPanel_TL">Loading&hellip;</span></td>
+	</tr>
+</table><div id="loadingPanel_GlobalLoadingPanel_LD" class="dxlpLoadingDiv_Moderno dxlpControl_Moderno dx-ft" style="opacity:0.7;left:0px;top:0px;z-index:29999;display:none;position:absolute;">
+
+</div><script id="dxss_42683567">
+<!--
+ASPx.createControl(ASPxClientLoadingPanel,'loadingPanel_GlobalLoadingPanel','',null,{'Init':function (s, e) {
+	var _target = ASPxClientControl.GetControlCollection().GetByName('loadingPanel_GlobalLoadingPanel');
+	if (_target) {
+		$(document).bind('ajaxSend', function (e, xhr, plainObj) {
+			if (plainObj != null && plainObj.data != null && plainObj.data.indexOf('cpDoNotShowPopup=true') > -1) { return;}
+			if (!_target.cpInterlocked) { _target.cpInterlocked = 1;} else { _target.cpInterlocked += 1;}
+			_target.Show();
+		}).bind('ajaxComplete', function () {
+			if (!_target.cpInterlocked) { _target.cpInterlocked = 0;} else { if (_target.cpInterlocked > 0) _target.cpInterlocked -= 1;}
+			if (_target.cpInterlocked == 0) _target.Hide();
+		});
+	}
+}
+});
+
+//-->
+</script><table class="dxsplControl_Moderno" id="splitter_Navigation-of-GuardianPortal_Navigation" style="border-collapse:separate;">
+	<tr>
+		<td id="splitter_Navigation-of-GuardianPortal_Navigation_0" class="dxsplPane_Moderno" style="vertical-align:top;"><div id="splitter_Navigation-of-GuardianPortal_Navigation_0_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;">
+<div id='VerticalLayoutHeader'><div id='VerticalLayoutApplicationCaption' style='margin: 5px;'><span class="dxeBase_Moderno" id="lbl_Student_Portal" style="display:inline-block;font-weight:bold;width:100%;color:white;">Student Portal</span></div>
+<div id='VerticalLayoutApplicationUsername' style='float: left; margin-left: 5px; margin-bottom: 5px;'><span class="dxeBase_Moderno" id="lbl_clgann" style="display:inline-block;width:100%;color:white;width:auto;vertical-align:top;">clgann</span></div>
+<div id='VerticalLayoutApplicationLinks' style='float: right; margin-right: 5px; margin-bottom: 5px;'><div id='GuardianPortal_NavigationsideBarNavigation' style='display: inline-block; background-color:Black; height:100%;'><div id='Main_Nav' style='display: inline-block; top:0px; left:0px; margin: auto 3px;'><a class="dxeHyperlink_Moderno" id="btnOptionsSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation" href="javascript:void 0" style="color:White;width:100%;display:inline-block;">Options</a></div><div id='Standard_Nav' style='display: inline-block; top:0px; left:0px; margin: auto 3px;'><a class="dxeHyperlink_Moderno" id="btnNavLogoutSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation" href="/Mannford/Gradebook/StudentPortal/AreaLogin/Logout" style="color:White;width:100%;display:inline-block;">Logout</a></div></div></div>
+</div>
+<div style='height:0px; width:100%;'><div id="popup_Options_PW-1" class="dxpcLite_Moderno dxpclW" style="width:256px;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow" style="text-align:Left;vertical-align:Top;">
+		<div class="dxpc-header mas-popup-header mas-popup-header-close dxpc-withBtn">
+			<div class="dxpc-closeBtn">
+				<img class="dxWeb_pcCloseButton_Moderno" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="Close" />
+			</div><div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam">Options</span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="mas-popup-content-y dxpc-content" style="padding-left:4px;padding-right:4px;padding-top:4px;padding-bottom:4px;">
+				<div class="dxbButton_Moderno dxbButtonSys dxbTSys" id="btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation" style="width:100%;-webkit-user-select:none;">
+	<div class="dxb">
+		<div class="dxb-hbc">
+			<input id="btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation_I" class="dxb-hb" value="Account" type="button" name="btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation" />
+		</div><span class="dx-wrap">Account</span>
+	</div>
+</div><script id="dxss_905532638">
+<!--
+ASPx.AddHoverItems('btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation',[[['dxbButtonHover_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddPressedItems('btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation',[[['dxbButtonPressed_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddDisabledItems('btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation',[[['dxbDisabled_Moderno'],[''],[''],['','TC']]]);
+ASPx.AddSelectedItems('btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation',[[['dxbf'],[''],['CD']]]);
+ASPx.createControl(MVCxClientButton,'btnAccountSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation','',{'encodeHtml':false,'useSubmitBehavior':false,'validateInvisibleEditors':true},{'Click':function (_sender, _args) {
+	var win = window.open('/Mannford/manage', '_blank');
+	if (win) {
+		win.focus();
+	} else {
+		window.location.href = '/Mannford/manage';
+	}
+}
+});
+
+//-->
+</script>
+			</div>
+		</div><div class="dxpc-footer">
+
+		</div>
+	</div>
+</div><div id="popup_Options_DXPWMB-1" class="dxpcModalBackLite_Moderno" style="z-index:9999;">
+
+</div><script id="dxss_820077780">
+<!--
+ASPx.AddHoverItems('popup_Options',[[['dxpc-closeBtnHover'],[''],['HCB-1']]]);
+ASPx.createControl(MVCxClientPopupControl,'popup_Options','',{'appearAfter':500,'popupAnimationType':'fade','popupHorizontalAlign':'WindowCenter','popupVerticalAlign':'WindowCenter','modal':true,'minWidth':256,'defaultWindowPopupElementIDList':['btnOptionsSideBar-of-splitter_Navigation-of-GuardianPortal_Navigation']},{'Init':function (sender, initArgs) {
+	sender.AdjustHeight = function () {
+	};
+	sender.AdjustWidth = function () {
+	};
+	sender.AdjustHeight();
+	sender.AdjustWidth();
+	ASPxClientUtils.AttachEventToElement(window, "resize", function (evt) {
+		sender.AdjustHeight();
+		sender.AdjustWidth();
+	});
+}
+,'Shown':function (s, e) {  if (window.jMAS) {    if (window.jMAS.stretchDXChildren) {      var el = null;      if (e.pane) {        el = e.pane.helper.GetContentContainerElement();      } else if (s.GetWindowElement) {        if (s.GetWindowElement[-1]) {          el = s.GetWindowElement[-1];        } else {          el = document.body;        }      } else {        el = document.body;      }      window.jMAS.stretchChildren(el);      el = null;    }  }}});
+
+//-->
+</script></div>
+
+		</div></td>
+	</tr><tr>
+		<td id="splitter_Navigation-of-GuardianPortal_Navigation_1" class="dxsplPane_Moderno" style="border-top-style:Solid;border-top-width:0px;vertical-align:top;"><div id="splitter_Navigation-of-GuardianPortal_Navigation_1_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:3px;padding-right:3px;padding-top:3px;padding-bottom:3px;">
+<div id='mainContent' style='width: 100%; height: 100%' class='mas-moderno'>
+
+<table class="dxeTextBoxSys dxeTextBox_Moderno dxeTextBoxDefaultWidthSys" id="HiddenSessionID" style="display:none;">
+	<tr>
+		<td class="dxic" style="width:100%;"><input class="dxeEditArea_Moderno dxeEditAreaSys" id="HiddenSessionID_I" name="HiddenSessionID" onchange="ASPx.EValueChanged(&#39;HiddenSessionID&#39;)" value="b2239fd1-22f1-ee11-77b8-00505601006b" type="text" /></td>
+	</tr>
+</table><script id="dxss_1485420867">
+<!--
+ASPx.FillDocumentElementDXThemeCssClassName("Moderno");
+ASPx.createControl(ASPxClientTextBox,'HiddenSessionID','',{'clientVisible':false,'scStates':6,'scPostfix':'Moderno'},null,null,{'decorationStyles':[{'key':'F','className':'dxeFocused_Moderno','cssText':''}]});
+
+//-->
+</script>
+
+<div id="popup_DetailsPopup_PW-1" class="dxpcLite_Moderno dxpclW" style="height:400px;width:300px;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header mas-popup-header mas-popup-header-close drag dxpc-withBtn" style="-webkit-user-select:none;">
+			<div class="dxpc-closeBtn">
+				<img class="dxWeb_pcCloseButton_Moderno" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="Close" />
+			</div><div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam">Details</span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="mas-popup-content dxpc-content" style="padding-left:4px;padding-right:4px;padding-top:4px;padding-bottom:4px;overflow:auto;">
+				<div id='DetailsPopupContent'></div>
+			</div>
+		</div><div class="dxpc-footer">
+
+		</div>
+	</div>
+</div><div id="popup_DetailsPopup_DXPWMB-1" class="dxpcModalBackLite_Moderno" style="z-index:9999;">
+
+</div><script id="dxss_2102540298">
+<!--
+ASPx.AddHoverItems('popup_DetailsPopup',[[['dxpc-closeBtnHover'],[''],['HCB-1']]]);
+ASPx.createControl(MVCxClientPopupControl,'popup_DetailsPopup','',{'appearAfter':500,'popupAnimationType':'fade','closeAction':'CloseButton','popupHorizontalAlign':'WindowCenter','popupVerticalAlign':'WindowCenter','allowDragging':true,'modal':true,'width':300,'widthFromServer':true,'height':400,'contentOverflowX':'Auto','contentOverflowY':'Auto'});
+
+//-->
+</script><table class="dxsplControl_Moderno" id="splitter_LandingPageSplitter" style="border-collapse:separate;">
+	<tr>
+		<td id="splitter_LandingPageSplitter_0" class="dxsplPane_Moderno" style="vertical-align:top;"><div id="splitter_LandingPageSplitter_0_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;">
+<table class="dxrpControlGB_Moderno dxrp-noCollapsing" id="UserOptionsNavigation" style="height:100%;width:100%;border-collapse:separate;">
+	<tr class="dxrpCR">
+		<td id="UserOptionsNavigation_RPC" class="dxrp dxrpcontent dx-borderBox dx-al" style="width:100%;vertical-align:Top;"><div id="UserOptionsNavigation_GBC" style="position:relative;text-align:left;">
+			<span class="dxrpHeader_Moderno"><span id="UserOptionsNavigation_RPHT">Resources</span></span>
+		</div><a class="dxeHyperlink_Moderno" onclick="return ASPx.SEClick(&#39;btnTraining_Video&#39;, event)" id="btnTraining_Video" href="javascript:void 0" style="width:100%;display:inline-block;width:auto;padding:0px 5px;border-right-style:Solid;">Training Video</a><script id="dxss_830318598">
+<!--
+ASPx.createControl(ASPxClientHyperLink,'btnTraining_Video','',{'scStates':4,'scPostfix':'Moderno'},{'Click':function() { try { window.open('https://ok.wengage.com/MANNFORD/Training/Player?systemId=studentinformation&categoryId=iGB&videoid=aHR0cHM6Ly9wbGF5ZXIudmltZW8uY29tL3ZpZGVvLzM2MDMyMjY4OA%253d%253d'); } catch(err) { window.location.href = 'https://ok.wengage.com/MANNFORD/Training/Player?systemId=studentinformation&categoryId=iGB&videoid=aHR0cHM6Ly9wbGF5ZXIudmltZW8uY29tL3ZpZGVvLzM2MDMyMjY4OA%253d%253d'; } }});
+
+//-->
+</script><a class="dxeHyperlink_Moderno" onclick="return ASPx.SEClick(&#39;btnMAS_Announcements&#39;, event)" id="btnMAS_Announcements" href="javascript:void 0" style="width:100%;display:inline-block;width:auto;padding:0px 5px;">MAS Announcements</a><script id="dxss_844717705">
+<!--
+ASPx.createControl(ASPxClientHyperLink,'btnMAS_Announcements','',{'scStates':4,'scPostfix':'Moderno'},{'Click':function(s, e) { PostData(s, e, '/Mannford/Gradebook/StudentPortal/Index/GetMASAnnouncements', null, '', 'MASProductAnnouncements', null, function() { popup_MAS_Announcements_Popup.Show(); }, null, null, null); }});
+
+//-->
+</script></td>
+	</tr>
+</table>
+		</div></td>
+	</tr><tr>
+		<td id="splitter_LandingPageSplitter_1" class="dxsplPane_Moderno" style="border-top-style:Solid;border-top-width:0px;vertical-align:top;"><div id="splitter_LandingPageSplitter_1_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;">
+<table class="dxsplControl_Moderno" id="splitter_StudentOverviewContent" style="border-collapse:separate;">
+	<tr>
+		<td id="splitter_StudentOverviewContent_0" class="dxsplPane_Moderno" style="vertical-align:top;"><div id="splitter_StudentOverviewContent_0_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;">
+
+<div id='div_StudentPreviewHeader' class='PersonPreviewHeader'><div id='Image_4726b797-82e1-ea11-2ab8-00505601006f_Panel' class='edit-form-group'><div id='MASStudentInformationPresentationStudentPreviewPresenterImage4726b797-82e1-ea11-2ab8-00505601006fUnlabelledHTMLControlmkc-editformline' class='edit-form-line-nolabel'><div id='MASStudentInformationPresentationStudentPreviewPresenterImage4726b797-82e1-ea11-2ab8-00505601006fUnlabelledHTMLControlmkc-editformeditor' class='edit-form-editor-nolabel'><img src='https://okutils.wengage.com:443/mannfordimageserver/GetStudentImage.aspx?site=mannford&file=4826b79782e1ea112ab800505601006f' class='MASImage' onclick=''/></div></div></div>
+<div id='Student_Demographics_Info_4726b797-82e1-ea11-2ab8-00505601006f_Panel' class='edit-form-group'><div id='MASStudentInformationPresentationStudentPreviewPresenterFullLastNameFirst4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformline' class='edit-form-line'><div id='MASStudentInformationPresentationStudentPreviewPresenterFullLastNameFirst4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformlabel' class='edit-form-label'><label class="dxeBase_Moderno" id="lbl_MASStudentInformationPresentationStudentPreviewPresenterFullLastNameFirst4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc">Name</label><script id="dxss_1670124942">
+<!--
+ASPx.createControl(MVCxClientLabel,'lbl_MASStudentInformationPresentationStudentPreviewPresenterFullLastNameFirst4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc','',{'associatedControlName':'MAS.StudentInformation.Presentation.StudentPreviewPresenter:FullLastNameFirst:4726b797-82e1-ea11-2ab8-00505601006f:TextBox:~mkc~'});
+
+//-->
+</script></div><div id='MASStudentInformationPresentationStudentPreviewPresenterFullLastNameFirst4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformeditor' class='edit-form-editor'><span class="dxeBase_Moderno" id="MAS.StudentInformation.Presentation.StudentPreviewPresenter:FullLastNameFirst:4726b797-82e1-ea11-2ab8-00505601006f:TextBox:~mkc~" style="display:inline-block;width:100%;">GANN, CURTIS</span></div></div><div id='MASStudentInformationPresentationStudentPreviewPresenterStudentUID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformline' class='edit-form-line'><div id='MASStudentInformationPresentationStudentPreviewPresenterStudentUID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformlabel' class='edit-form-label'><label class="dxeBase_Moderno" id="lbl_MASStudentInformationPresentationStudentPreviewPresenterStudentUID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc">ID</label><script id="dxss_940320696">
+<!--
+ASPx.createControl(MVCxClientLabel,'lbl_MASStudentInformationPresentationStudentPreviewPresenterStudentUID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc','',{'associatedControlName':'MAS.StudentInformation.Presentation.StudentPreviewPresenter:StudentUID:4726b797-82e1-ea11-2ab8-00505601006f:TextBox:~mkc~'});
+
+//-->
+</script></div><div id='MASStudentInformationPresentationStudentPreviewPresenterStudentUID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformeditor' class='edit-form-editor'><span class="dxeBase_Moderno" id="MAS.StudentInformation.Presentation.StudentPreviewPresenter:StudentUID:4726b797-82e1-ea11-2ab8-00505601006f:TextBox:~mkc~" style="display:inline-block;width:100%;">105108</span></div></div><div id='MASStudentInformationPresentationStudentPreviewPresenterStateID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformline' class='edit-form-line'><div id='MASStudentInformationPresentationStudentPreviewPresenterStateID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformlabel' class='edit-form-label'><label class="dxeBase_Moderno" id="lbl_MASStudentInformationPresentationStudentPreviewPresenterStateID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc">State ID</label><script id="dxss_1780990681">
+<!--
+ASPx.createControl(MVCxClientLabel,'lbl_MASStudentInformationPresentationStudentPreviewPresenterStateID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc','',{'associatedControlName':'MAS.StudentInformation.Presentation.StudentPreviewPresenter:StateID:4726b797-82e1-ea11-2ab8-00505601006f:TextBox:~mkc~'});
+
+//-->
+</script></div><div id='MASStudentInformationPresentationStudentPreviewPresenterStateID4726b797-82e1-ea11-2ab8-00505601006fTextBoxmkc-editformeditor' class='edit-form-editor'><span class="dxeBase_Moderno" id="MAS.StudentInformation.Presentation.StudentPreviewPresenter:StateID:4726b797-82e1-ea11-2ab8-00505601006f:TextBox:~mkc~" style="display:inline-block;width:100%;">1002178737</span></div></div></div>
+<input id='MAS.StudentInformation.Presentation.StudentPreviewPresenter:StudentID:4726b797-82e1-ea11-2ab8-00505601006f:Hidden:~mkc~' name='MAS.StudentInformation.Presentation.StudentPreviewPresenter:StudentID:4726b797-82e1-ea11-2ab8-00505601006f:Hidden:~mkc~' type='hidden' value='4726b797-82e1-ea11-2ab8-00505601006f'/></div>
+
+		</div></td>
+	</tr><tr>
+		<td id="splitter_StudentOverviewContent_1" class="dxsplPane_Moderno" style="border-top-style:Solid;border-top-width:0px;vertical-align:top;"><div id="splitter_StudentOverviewContent_1_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;">
+<table class="dxsplControl_Moderno" id="splitter_container-of-OverviewDetailsNavigation" style="border-collapse:separate;">
+	<tr>
+		<td id="splitter_container-of-OverviewDetailsNavigation_0" class="dxsplPane_Moderno" style="vertical-align:top;"><div id="splitter_container-of-OverviewDetailsNavigation_0_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;">
+<div class="dxisControl" id="OverviewDetailsNavigation" style="height:100%;width:100%;display:none;">
+
+</div><script id="dxss_1582451160">
+<!--
+ASPx.AddHoverItems('OverviewDetailsNavigation',[[['dxis-prevBtnHorHover'],[''],['nbb'],,[[{'spriteCssClass':'dxWeb_isPrevBtnHorHover'}]],['']],[['dxis-nextBtnHorHover'],[''],['nbf'],,[[{'spriteCssClass':'dxWeb_isNextBtnHorHover'}]],['']],[['dxis-prevPageBtnHorHover'],[''],['ntbb'],,[[{'spriteCssClass':'dxWeb_isPrevPageBtnHorHover'}]],['']],[['dxis-nextPageBtnHorHover'],[''],['ntbf'],,[[{'spriteCssClass':'dxWeb_isNextPageBtnHorHover'}]],['']]]);
+ASPx.AddPressedItems('OverviewDetailsNavigation',[[['dxis-prevBtnHorPressed'],[''],['nbb'],,[[{'spriteCssClass':'dxWeb_isPrevBtnHorPressed'}]],['']],[['dxis-nextBtnHorPressed'],[''],['nbf'],,[[{'spriteCssClass':'dxWeb_isNextBtnHorPressed'}]],['']],[['dxis-prevPageBtnHorPressed'],[''],['ntbb'],,[[{'spriteCssClass':'dxWeb_isPrevPageBtnHorPressed'}]],['']],[['dxis-nextPageBtnHorPressed'],[''],['ntbf'],,[[{'spriteCssClass':'dxWeb_isNextPageBtnHorPressed'}]],['']]]);
+ASPx.AddDisabledItems('OverviewDetailsNavigation',[[['dxis-prevBtnHorDisabled'],[''],['nbb'],,[[{'spriteCssClass':'dxWeb_isPrevBtnHorDisabled'}]],['']],[['dxis-nextBtnHorDisabled'],[''],['nbf'],,[[{'spriteCssClass':'dxWeb_isNextBtnHorDisabled'}]],['']],[['dxis-prevPageBtnHorDisabled'],[''],['ntbb'],,[[{'spriteCssClass':'dxWeb_isPrevPageBtnHorDisabled'}]],['']],[['dxis-nextPageBtnHorDisabled'],[''],['ntbf'],,[[{'spriteCssClass':'dxWeb_isNextPageBtnHorDisabled'}]],['']]]);
+ASPx.createControl(MVCxClientImageSlider,'OverviewDetailsNavigation','',{'hasTemplates':true,'itemsCount':3,'imageLoadMode':0,'showImageArea':false,'navBarPos':1,'extremeItemClickMode':1,'navBarStyle':'padding-left:25px;padding-top:2px;padding-right:25px;padding-bottom:2px;','navBarCssCl':'dxis-nbTop','thStyle':'background-color:Transparent;height:30px;width:215px;','thCssCl':'dxis-nbItem','thSelCssCl':'dxis-nbSelectedItem','thumbNavBtnsVbl':3,'nbpbh':'<div id="OverviewDetailsNavigation_ntbb" class="dxWeb_isPrevPageBtnHor dxis-prevPageBtnHor">\r\n\r\n</div>','nbnbh':'<div id="OverviewDetailsNavigation_ntbf" class="dxWeb_isNextPageBtnHor dxis-nextPageBtnHor">\r\n\r\n</div>','navBarPagingMode':1},{'Init':function(s, e) {jQuery.unsubscribe('MAS_Server_Message', null, null, 'OverviewDetailsNavigation');
+jQuery.subscribe('MAS_Server_Message', function(topic, data) {
+	subscribedObject = document.getElementById('OverviewDetailsNavigation');
+	if (subscribedObject != null) {
+		
+SelectPreviousItem(OverviewDetailsNavigation, true)
+
+	} else {
+		jQuery.unsubscribe(topic, null, null, 'OverviewDetailsNavigation');
+	}
+}
+, null, 'OverviewDetailsNavigation');;
+jQuery.unsubscribe('Response_Ended', null, null, 'OverviewDetailsNavigation');
+jQuery.subscribe('Response_Ended', function(topic, data) {
+	subscribedObject = document.getElementById('OverviewDetailsNavigation');
+	if (subscribedObject != null) {
+		
+OverviewDetailsNavigation.cpMASInCallback = false;
+
+	} else {
+		jQuery.unsubscribe(topic, null, null, 'OverviewDetailsNavigation');
+	}
+}
+, null, 'OverviewDetailsNavigation');;
+OverviewDetailsNavigation.SelectionHistory = [0];;
+ AjaxPostAndShow('/Mannford/Gradebook/StudentPortal/StudentOverview/ShowSummary?ID=4726b797-82e1-ea11-2ab8-00505601006f', DXControl('HiddenSessionID').GetValue(), 'splitter_container-of-OverviewDetailsNavigation_1_CC'); },'ActiveItemChanged':function (sldr, sldrArgs) {
+	if(sldr.cpMASInCallback) return;
+	jQuery('#' + sldr.name + ' .dxis-nbSelectedItem, #' + sldr.name + ' .dxis-nbSelectedItem > div').css('visibility', 'inherit');
+	sldr.SelectionHistory.push(sldr.GetActiveItem().index);
+	sldr.cpMASInCallback = true;
+	if (sldrArgs.item) {
+		switch (sldrArgs.item.index) {
+			case 0:
+				(function() { AjaxPostAndShow('/Mannford/Gradebook/StudentPortal/StudentOverview/ShowSummary?ID=4726b797-82e1-ea11-2ab8-00505601006f', DXControl('HiddenSessionID').GetValue(), 'splitter_container-of-OverviewDetailsNavigation_1_CC'); })(sldr, sldrArgs);
+				break;
+			case 1:
+				(function() { AjaxPostAndShow('/Mannford/Gradebook/StudentPortal/StudentOverview/ShowAnnouncementsEvents?ID=4726b797-82e1-ea11-2ab8-00505601006f', DXControl('HiddenSessionID').GetValue(), 'splitter_container-of-OverviewDetailsNavigation_1_CC'); })(sldr, sldrArgs);
+				break;
+			case 2:
+				(function() { AjaxPostAndShow('/Mannford/Gradebook/StudentPortal/Reporting/ShowReportSelector?ID=4726b797-82e1-ea11-2ab8-00505601006f', DXControl('HiddenSessionID').GetValue(), 'splitter_container-of-OverviewDetailsNavigation_1_CC'); })(sldr, sldrArgs);
+				break;
+		default: return false;
+		}
+		if (sldrArgs.item.name) AjaxPostJSON('/Mannford/Gradebook/StudentPortal/Index/ControlSelectionChanged',{value:'OverviewDetailsNavigation|' + sldrArgs.item.name});
+	}
+}
+});
+window['OverviewDetailsNavigation'].items = ({'0':{'tmtpl':'<div id=\'navbarItemPanel\' style=\'width:100%;height:100%;\'><div class="dxbButton_Moderno dxbButtonSys dxbTSys" id="tabPage_Summary-of-OverviewDetailsNavigation" style="background-color:Gainsboro;border-style:None;height:100%;width:100%;-webkit-user-select:none;text-align:Center;vertical-align:Middle;">\r\n\t<div class="dxb">\r\n\t\t<span class="dx-vam dx-wrap">Summary</span>\r\n\t</div>\r\n</div><script id="dxss_160967778">\n<!-\-\nASPx.AddHoverItems(\'tabPage_Summary-of-OverviewDetailsNavigation\',[[[\'dxbButtonHover_Moderno\'],[\'\'],[\'\'],[\'\',\'TC\']]]);\nASPx.AddPressedItems(\'tabPage_Summary-of-OverviewDetailsNavigation\',[[[\'dxbButtonPressed_Moderno\'],[\'\'],[\'\'],[\'\',\'TC\']]]);\nASPx.InitializeSVGSprite();\r\nASPx.createControl(MVCxClientButton,\'tabPage_Summary-of-OverviewDetailsNavigation\',\'\',{\'encodeHtml\':false,\'allowFocus\':false,\'useSubmitBehavior\':false,\'validateInvisibleEditors\':true});\n\n//-\->\n<\/script></div>\r\n','n':'Summary','t':'Summary'},'1':{'tmtpl':'<div id=\'navbarItemPanel\' style=\'width:100%;height:100%;\'><div class="dxbButton_Moderno dxbButtonSys dxbTSys" id="tabPage_AnnouncementsEvents-of-OverviewDetailsNavigation" style="background-color:Gainsboro;border-style:None;height:100%;width:100%;-webkit-user-select:none;text-align:Center;vertical-align:Middle;">\r\n\t<div class="dxb">\r\n\t\t<span class="dx-vam dx-wrap">Announcements/Events</span>\r\n\t</div>\r\n</div><script id="dxss_1832275009">\n<!-\-\nASPx.AddHoverItems(\'tabPage_AnnouncementsEvents-of-OverviewDetailsNavigation\',[[[\'dxbButtonHover_Moderno\'],[\'\'],[\'\'],[\'\',\'TC\']]]);\nASPx.AddPressedItems(\'tabPage_AnnouncementsEvents-of-OverviewDetailsNavigation\',[[[\'dxbButtonPressed_Moderno\'],[\'\'],[\'\'],[\'\',\'TC\']]]);\nASPx.createControl(MVCxClientButton,\'tabPage_AnnouncementsEvents-of-OverviewDetailsNavigation\',\'\',{\'encodeHtml\':false,\'allowFocus\':false,\'useSubmitBehavior\':false,\'validateInvisibleEditors\':true});\n\n//-\->\n<\/script></div>\r\n','n':'AnnouncementsEvents','t':'Announcements/Events'},'2':{'tmtpl':'<div id=\'navbarItemPanel\' style=\'width:100%;height:100%;\'><div class="dxbButton_Moderno dxbButtonSys dxbTSys" id="tabPage_Reports-of-OverviewDetailsNavigation" style="background-color:Gainsboro;border-style:None;height:100%;width:100%;-webkit-user-select:none;text-align:Center;vertical-align:Middle;">\r\n\t<div class="dxb">\r\n\t\t<span class="dx-vam dx-wrap">Reports</span>\r\n\t</div>\r\n</div><script id="dxss_609996567">\n<!-\-\nASPx.AddHoverItems(\'tabPage_Reports-of-OverviewDetailsNavigation\',[[[\'dxbButtonHover_Moderno\'],[\'\'],[\'\'],[\'\',\'TC\']]]);\nASPx.AddPressedItems(\'tabPage_Reports-of-OverviewDetailsNavigation\',[[[\'dxbButtonPressed_Moderno\'],[\'\'],[\'\'],[\'\',\'TC\']]]);\nASPx.createControl(MVCxClientButton,\'tabPage_Reports-of-OverviewDetailsNavigation\',\'\',{\'encodeHtml\':false,\'allowFocus\':false,\'useSubmitBehavior\':false,\'validateInvisibleEditors\':true});\n\n//-\->\n<\/script></div>\r\n','n':'Reports','t':'Reports'}})
+
+//-->
+</script>
+		</div></td>
+	</tr><tr>
+		<td id="splitter_container-of-OverviewDetailsNavigation_1" class="dxsplPane_Moderno" style="border-top-style:Solid;border-top-width:0px;vertical-align:top;"><div id="splitter_container-of-OverviewDetailsNavigation_1_CC" class="dxsplLCC" style="height:1px;width:1px;padding-left:0px;padding-right:0px;padding-top:0px;padding-bottom:0px;">
+
+		</div></td>
+	</tr>
+</table><div id="splitter_container-of-OverviewDetailsNavigation_RP" class="dxsplResizingPointer_Moderno" style="z-index:29999;display:none;position:absolute;">
+
+</div><script id="dxss_983501605">
+<!--
+ASPx.AddHoverItems('splitter_container-of-OverviewDetailsNavigation',[[['dxsplHSeparatorHover_Moderno'],[''],['1_S'],,[[{'spriteCssClass':'dxWeb_splHSeparatorHover_Moderno'}]],['_CS_Img']]]);
+ASPx.AddSelectedItems('splitter_container-of-OverviewDetailsNavigation',[[['dxsplPaneCollapsed_Moderno'],[''],['0','1']],[['dxsplHSeparatorCollapsed_Moderno'],[''],['0_S','1_S']]]);
+ASPx.createControl(ASPxClientSplitter,'splitter_container-of-OverviewDetailsNavigation','',{'height':'100%','allowResize':false,'showSeparatorImage':true,'defaultMinSize':0},{'Init':function (_sender, _initArgs) {
+jQuery.publish('SplitterIsInitializing', 'splitter_container-of-OverviewDetailsNavigation|false');
+}
+,'PaneResized':function (s, e) {  if (window.jMAS) {    if (window.jMAS.stretchDXChildren) {      var el = null;      if (e.pane) {        el = e.pane.helper.GetContentContainerElement();      } else if (s.GetWindowElement) {        if (s.GetWindowElement[-1]) {          el = s.GetWindowElement[-1];        } else {          el = document.body;        }      } else {        el = document.body;      }      window.jMAS.stretchChildren(el);      el = null;    }  }}},null,{'panes':[{'v':1,'s':34,'st':'px','n':'splitter_container-of-OverviewDetailsNavigation_0_CC'},{'v':1,'s':100,'st':'%','n':'splitter_container-of-OverviewDetailsNavigation_1_CC'}]});
+
+//-->
+</script>
+		</div></td>
+	</tr>
+</table><div id="splitter_StudentOverviewContent_RP" class="dxsplResizingPointer_Moderno" style="z-index:29999;display:none;position:absolute;">
+
+</div><script id="dxss_910689530">
+<!--
+ASPx.AddHoverItems('splitter_StudentOverviewContent',[[['dxsplHSeparatorHover_Moderno'],[''],['1_S'],,[[{'spriteCssClass':'dxWeb_splHSeparatorHover_Moderno'}]],['_CS_Img']]]);
+ASPx.AddSelectedItems('splitter_StudentOverviewContent',[[['dxsplPaneCollapsed_Moderno'],[''],['0','1']],[['dxsplHSeparatorCollapsed_Moderno'],[''],['0_S','1_S']]]);
+ASPx.createControl(ASPxClientSplitter,'splitter_StudentOverviewContent','',{'height':'100%','allowResize':false,'showSeparatorImage':true,'defaultMinSize':0},{'Init':function (_sender, _initArgs) {
+jQuery.publish('SplitterIsInitializing', 'splitter_StudentOverviewContent|true');
+}
+,'PaneResized':function (s, e) {  if (window.jMAS) {    if (window.jMAS.stretchDXChildren) {      var el = null;      if (e.pane) {        el = e.pane.helper.GetContentContainerElement();      } else if (s.GetWindowElement) {        if (s.GetWindowElement[-1]) {          el = s.GetWindowElement[-1];        } else {          el = document.body;        }      } else {        el = document.body;      }      window.jMAS.stretchChildren(el);      el = null;    }  }}},null,{'panes':[{'ah':1,'nar':0,'smax':0,'v':1,'n':'splitterpane_splitter_StudentOverviewContent_Top'},{'v':1,'s':100,'st':'%','n':'splitterpane_splitter_StudentOverviewContent_Bottom'}]});
+
+//-->
+</script>
+		</div></td>
+	</tr>
+</table><div id="splitter_LandingPageSplitter_RP" class="dxsplResizingPointer_Moderno" style="z-index:29999;display:none;position:absolute;">
+
+</div><script id="dxss_1585747500">
+<!--
+ASPx.AddHoverItems('splitter_LandingPageSplitter',[[['dxsplHSeparatorHover_Moderno'],[''],['1_S'],,[[{'spriteCssClass':'dxWeb_splHSeparatorHover_Moderno'}]],['_CS_Img']]]);
+ASPx.AddSelectedItems('splitter_LandingPageSplitter',[[['dxsplPaneCollapsed_Moderno'],[''],['0','1']],[['dxsplHSeparatorCollapsed_Moderno'],[''],['0_S','1_S']]]);
+ASPx.createControl(ASPxClientSplitter,'splitter_LandingPageSplitter','',{'height':'100%','allowResize':false,'showSeparatorImage':true,'defaultMinSize':0},{'Init':function (_sender, _initArgs) {
+jQuery.publish('SplitterIsInitializing', 'splitter_LandingPageSplitter|true');
+}
+,'PaneResized':function (s, e) {  if (window.jMAS) {    if (window.jMAS.stretchDXChildren) {      var el = null;      if (e.pane) {        el = e.pane.helper.GetContentContainerElement();      } else if (s.GetWindowElement) {        if (s.GetWindowElement[-1]) {          el = s.GetWindowElement[-1];        } else {          el = document.body;        }      } else {        el = document.body;      }      window.jMAS.stretchChildren(el);      el = null;    }  }}},null,{'panes':[{'ah':1,'nar':0,'smax':0,'v':1,'n':'splitterpane_splitter_LandingPageSplitter_Top'},{'v':1,'s':100,'st':'%','n':'splitterpane_splitter_LandingPageSplitter_Bottom'}]});
+
+//-->
+</script><div id="popup_MAS_Announcements_Popup_PW-1" class="dxpcLite_Moderno dxpclW" style="height:400px;width:300px;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header mas-popup-header mas-popup-header-noclose drag" style="-webkit-user-select:none;">
+			<div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam">MAS Announcements</span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="mas-popup-content dxpc-content" style="padding-left:4px;padding-right:4px;padding-top:4px;padding-bottom:4px;overflow:auto;">
+				<div id='MASProductAnnouncements'></div>
+
+			</div>
+		</div><div class="dxpc-footer">
+
+		</div>
+	</div>
+</div><div id="popup_MAS_Announcements_Popup_DXPWMB-1" class="dxpcModalBackLite_Moderno" style="z-index:9999;">
+
+</div><script id="dxss_1580161559">
+<!--
+ASPx.createControl(MVCxClientPopupControl,'popup_MAS_Announcements_Popup','',{'appearAfter':500,'popupAnimationType':'fade','closeAction':'None','popupHorizontalAlign':'WindowCenter','popupVerticalAlign':'WindowCenter','allowDragging':true,'modal':true,'width':300,'widthFromServer':true,'height':400,'contentOverflowX':'Auto','contentOverflowY':'Auto'});
+
+//-->
+</script></div>
+		</div></td>
+	</tr>
+</table><div id="splitter_Navigation-of-GuardianPortal_Navigation_RP" class="dxsplResizingPointer_Moderno" style="z-index:29999;display:none;position:absolute;">
+
+</div><script id="dxss_1347638260">
+<!--
+ASPx.AddHoverItems('splitter_Navigation-of-GuardianPortal_Navigation',[[['dxsplHSeparatorHover_Moderno'],[''],['1_S'],,[[{'spriteCssClass':'dxWeb_splHSeparatorHover_Moderno'}]],['_CS_Img']]]);
+ASPx.AddSelectedItems('splitter_Navigation-of-GuardianPortal_Navigation',[[['dxsplPaneCollapsed_Moderno'],[''],['0','1']],[['dxsplHSeparatorCollapsed_Moderno'],[''],['0_S','1_S']]]);
+ASPx.createControl(ASPxClientSplitter,'splitter_Navigation-of-GuardianPortal_Navigation','',{'height':'100%','allowResize':false,'showSeparatorImage':true,'defaultMinSize':0,'fullScreen':true},{'Init':function (_sender, _initArgs) {
+jQuery.publish('SplitterIsInitializing', 'splitter_Navigation-of-GuardianPortal_Navigation|false');
+}
+,'PaneResized':function (s, e) {  if (window.jMAS) {    if (window.jMAS.stretchDXChildren) {      var el = null;      if (e.pane) {        el = e.pane.helper.GetContentContainerElement();      } else if (s.GetWindowElement) {        if (s.GetWindowElement[-1]) {          el = s.GetWindowElement[-1];        } else {          el = document.body;        }      } else {        el = document.body;      }      window.jMAS.stretchChildren(el);      el = null;    }  }}},null,{'panes':[{'ah':1,'v':1,'n':'splitterpane_SideBar-of-splitter_Navigation-of-GuardianPortal_Navigation'},{'n':'splitterpane_MainContent-of-splitter_Navigation-of-GuardianPortal_Navigation','v':1}]});
+
+//-->
+</script>
+	<div id="popup_DeviceWarning_PW-1" class="dxpcLite_Moderno dxpclW" style="height:400px;width:300px;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header mas-popup-header mas-popup-header-close dxpc-withBtn">
+			<div class="dxpc-closeBtn">
+				<img class="dxWeb_pcCloseButton_Moderno" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="Close" />
+			</div><div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam">Identity Provider Warning</span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="mas-popup-content dxpc-content" style="padding-left:4px;padding-right:4px;padding-top:4px;padding-bottom:4px;overflow:auto;">
+				<div id='DeviceWarningContent' style='margin-bottom:10px'><p id='IdentityProviderContent' style='color: red; font-weight:bold;'>Signing out of your Sylogist™ Ed application(s) does not sign you out of your Identity Provider account. You must properly sign out of your @providerName account to end your session with @providerName.</p>Private device?<br /><a href='' id='btnIgnoreWarning' class='dxeHyperlink_Moderno ' onclick="jQuery.post('/Mannford/Gradebook/StudentPortal/Index/IgnoreDeviceWarning', function(data) { popup_DeviceWarning.Hide(); } ); return false;" style='cursor: pointer' >Yes, please turn off this reminder.</a></div>
+
+			</div>
+		</div>
+	</div>
+</div><script id="dxss_1825929353">
+<!--
+ASPx.AddHoverItems('popup_DeviceWarning',[[['dxpc-closeBtnHover'],[''],['HCB-1']]]);
+ASPx.createControl(MVCxClientPopupControl,'popup_DeviceWarning','',{'appearAfter':500,'popupAnimationType':'slide','popupAction':'None','popupHorizontalOffset':50000,'popupVerticalOffset':50000,'width':300,'widthFromServer':true,'height':400,'contentOverflowX':'Auto','contentOverflowY':'Auto'},{'Init':function () {
+	setTimeout(function() {
+		jQuery.get('/Mannford/Gradebook/StudentPortal/Index/ShowDeviceWarning', function(data) {
+			if (!data.IgnoreWarning) {
+				var ipText = 'Signing out of your Sylogist™ Ed application(s) does not sign you out of your ' + data.ProviderName + ' account. You must properly sign out of your ' + data.ProviderName + ' account to end your session with ' + data.ProviderName + '.';
+				jQuery('#IdentityProviderContent').html(ipText);
+				popup_DeviceWarning.Show();
+			}
+		});
+	}, 100);
+}
+});
+
+//-->
+</script>
+	
+<script type="text/javascript">
+    $(document).ready(function () {
+        $(document).bind("ajaxComplete", function (e, resp, settings) {
+            // Check response status
+            switch (resp.status) {
+                case 401:
+                    // User is unauthorized
+                    if (resp.getResponseHeader("MASError")) {
+                        window.location.reload();
+                    } else {
+                        window.location.reload();
+                    }
+                    break;
+                case 500:
+                    // Internal error
+                    pcErrorMessage.SetHeaderText("An Error Occurred");
+                    if (resp.getResponseHeader("MASError")) {
+                        pcErrorMessage.SetContentHtml(resp.getResponseHeader("MASError"));
+                    } else {
+                        pcErrorMessage.SetContentHtml("There was an error.");
+                    }
+                    pcErrorMessage.Show();
+                default:
+                    break;
+            }
+        });
+
+    });
+
+    window.alert = function (title, message) {
+
+        if ((message == null || typeof message === 'undefined') && (title && title.toString().trim() != '')) {
+            pcErrorMessage.SetContentHtml(title);
+            pcErrorMessage.SetHeaderText("Message From Server")
+            pcErrorMessage.Show();
+            return;
+        };
+
+        if ((message && message.toString().trim() != '') && (title && title.toString().trim() != '')) {
+            pcErrorMessage.SetContentHtml(message.toString());
+            pcErrorMessage.SetHeaderText(title.toString())
+            pcErrorMessage.Show();
+        }
+        else if ((title && title.toString().trim() != '')) {
+            pcErrorMessage.SetContentHtml(title);
+            pcErrorMessage.SetHeaderText('')
+            pcErrorMessage.Show();
+        }
+        else if ((message && message.toString().trim() != '')) {
+            pcErrorMessage.SetContentHtml(message);
+            pcErrorMessage.SetHeaderText("Alert")
+            pcErrorMessage.Show();
+        }
+        else {
+            pcErrorMessage.SetContentHtml('');
+            pcErrorMessage.SetHeaderText("Alert")
+            pcErrorMessage.Show();
+        }
+    }
+</script>
+
+
+
+<div id="pcErrorMessage_PW-1" class="dxpcLite_Moderno dxpclW" style="width:400px;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header drag dxpc-withBtn" style="-webkit-user-select:none;">
+			<div class="dxpc-closeBtn">
+				<img class="dxWeb_pcCloseButton_Moderno" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="Close" />
+			</div><div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam">An Error Occurred</span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="dxpc-content">
+				There was an error.
+			</div>
+		</div>
+	</div>
+</div><div id="pcErrorMessage_DXPWMB-1" class="dxpcModalBackLite_Moderno" style="z-index:9999;">
+
+</div><script id="dxss_1022073617">
+<!--
+ASPx.AddHoverItems('pcErrorMessage',[[['dxpc-closeBtnHover'],[''],['HCB-1']]]);
+ASPx.createControl(MVCxClientPopupControl,'pcErrorMessage','',{'popupAnimationType':'fade','closeAction':'CloseButton','popupHorizontalAlign':'WindowCenter','popupVerticalAlign':'WindowCenter','allowDragging':true,'modal':true,'width':400,'widthFromServer':true});
+
+//-->
+</script>
+
+	<div id="popup_ApplicationOpen_PW-1" class="dxpcLite_Moderno dxpclW" style="width:200px;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header drag dxpc-withBtn" style="-webkit-user-select:none;">
+			<div class="dxpc-closeBtn">
+				<img class="dxWeb_pcCloseButton_Moderno" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="Close" />
+			</div><div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam"></span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="dxpc-content">
+				The application is already open.
+			</div>
+		</div>
+	</div>
+</div><script id="dxss_2018281230">
+<!--
+ASPx.AddHoverItems('popup_ApplicationOpen',[[['dxpc-closeBtnHover'],[''],['HCB-1']]]);
+ASPx.createControl(MVCxClientPopupControl,'popup_ApplicationOpen','',{'popupAnimationType':'slide','allowDragging':true});
+
+//-->
+</script>
+<div id="popup_SubscribedCriteriaPopup_PW-1" class="dxpcLite_Moderno drag dxpclW" style="height:600px;width:600px;-webkit-user-select:none;z-index:10000;display:none;visibility:hidden;">
+	<div class="dxpc-mainDiv dxpc-shadow">
+		<div class="dxpc-header mas-popup-header mas-popup-header-close dxpc-withBtn">
+			<div class="dxpc-closeBtn">
+				<img class="dxWeb_pcCloseButton_Moderno" src="/Mannford/Gradebook/DXR.axd?r=1_89-ujLpp" alt="Close" />
+			</div><div class="dxpc-headerContent">
+				<span class="dxpc-headerText dx-vam"></span>
+			</div><b class="dx-clear"></b>
+		</div><div class="dxpc-contentWrapper">
+			<div class="mas-popup-content dxpc-content" style="padding-left:4px;padding-right:4px;padding-top:4px;padding-bottom:4px;overflow:auto;">
+				
+			</div>
+		</div>
+	</div>
+</div><div id="popup_SubscribedCriteriaPopup_DXPWMB-1" class="dxpcModalBackLite_Moderno" style="z-index:9999;">
+
+</div><script id="dxss_1916672558">
+<!--
+ASPx.AddHoverItems('popup_SubscribedCriteriaPopup',[[['dxpc-closeBtnHover'],[''],['HCB-1']]]);
+ASPx.createControl(MVCxClientPopupControl,'popup_SubscribedCriteriaPopup','',{'appearAfter':500,'popupAnimationType':'fade','closeAction':'CloseButton','popupHorizontalAlign':'WindowCenter','popupVerticalAlign':'WindowCenter','isWindowDragging':true,'allowDragging':true,'modal':true,'width':600,'widthFromServer':true,'height':600,'contentOverflowX':'Auto','contentOverflowY':'Auto'},{'Init':function(s, e) {jQuery.subscribe('CriteriaLoaded_Event', function(topic, data) {
+	
+popup_SubscribedCriteriaPopup.Show(); popup_SubscribedCriteriaPopup.SetHeaderText(data);
+
+}
+, null, null);},'Closing':function(s, e) {$('#' + 'popup_SubscribedCriteriaPopup_PWC-1'.replace(/([ #;?&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1')).html('');}});
+
+//-->
+</script>
+	<script>
+		jQuery.subscribe("SplitterIsInitializing", splitterInit);
+		jQuery.subscribe("Response_Ended", SetupSplitter);
+	</script>
+</body>
+</html>
