@@ -7,9 +7,16 @@
 </head>
 <body>
     <h2>Enter a value to append after /login/:</h2>
-    <form action="/login/" method="GET">
-        <input type="text" name="user" placeholder="Type something..." required>
-        <button type="submit">Go</button>
-    </form>
+    <input type="text" id="inputBox" placeholder="Type something...">
+    <button onclick="updateURL()">Go</button>
+
+    <script>
+        function updateURL() {
+            let inputValue = document.getElementById("inputBox").value.trim();
+            if (inputValue) {
+                window.location.href = window.location.href + "/login/" + encodeURIComponent(inputValue);
+            }
+        }
+    </script>
 </body>
 </html>
