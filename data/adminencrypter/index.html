@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Decryptor</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Admin Decryptor</h1>
+
+    <label>Encrypted Message:</label>
+    <input type="text" id="adminEncryptedInput" placeholder="Enter encrypted text">
+
+    <button onclick="adminDecryptText()">Decrypt</button>
+
+    <h2>Results:</h2>
+    <p><strong>Extracted Key:</strong> <span id="extractedKey"></span></p>
+    <p><strong>Decrypted Message:</strong> <span id="adminDecryptedText"></span></p>
+
+    <script src="index.js"></script>
+</body>
+</html>
+
