@@ -1,19 +1,109 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <!-- Basic -->
-  <meta charset="utf-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <!-- Mobile Metas -->
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
-  <!-- Site Metas -->
-  <meta name="keywords" content="" />
-  <meta name="description" content="" />
-  <meta name="author" content="" />
-  <link rel="shortcut icon" href="images/favicon.png" type="">
-<html>
-  <head>
-    <title>Unblocked Acess</title>
-    <p>CRAZYGAMES <a target="_blank" rel="noopener noreferrer" href="https://crazygames.no">play</a></p>
-<p>BLOXED.IO <a target="_blank" rel="noopener noreferrer" href="https://crazygames.no/spill/bloxdhop-io?czy_invite=true&utm_source=invite&g=classic_survival&lobby=3030">play</a></p>
+  <meta charset="UTF-8">
+  <title>Website Unblocker</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #ffffff;
+      color: rgb(0, 0, 0);
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    #consentBox {
+      text-align: center;
+    }
+    #gameFrame {
+      display: none;
+      width: 100vw;
+      height: 100vh;
+      border: none;
+    }
+    #fallbackMessage {
+      color: red;
+      display: none;
+      font-size: 18px;
+    }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    input {
+      width: 300px;
+    }
+    #watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+  </style>
+</head>
+<body>
+  <div id="consentBox">
+    <h1>Website Unblocker</h1>
+    <p>Enter the URL of the website you want to unblock.</p>
+    <input type="text" id="gameURL" placeholder="https://example.com">
+    <button onclick="loadGame()">Continue</button>
+  </div>
+
+  <object id="gameFrame" data="" onerror="showFallback()"></object>
+  <div id="fallbackMessage">
+    <p>Sorry, this website cannot be embedded in the page. Please try visiting it directly.</p>
+  </div>
+
+  <div id="watermark">You're using mod-store.customvibes.store</div>
+
+  <script>
+    // Check if the user is coming from the original website
+    const allowedReferrer = "https://mod-store.customvibes.store"; // The original website's URL
+
+    if (document.referrer !== allowedReferrer) {
+      // If the referrer is not the allowed one, show an alert and block access
+      alert("This page can only be accessed from the original website.");
+      window.location.href = allowedReferrer; // Redirect to the original site
+    }
+
+    function loadGame() {
+      const url = document.getElementById('gameURL').value;
+
+      // Check if the URL is valid
+      if (!url.startsWith("http") && !url.startsWith("https")) {
+        alert("Please enter a valid URL (with http:// or https://)");
+        return;
+      }
+
+      // Hide the consent box
+      document.getElementById('consentBox').style.display = 'none';
+
+      // Set the URL in the object tag
+      const gameFrame = document.getElementById('gameFrame');
+      gameFrame.setAttribute('data', url);
+      gameFrame.style.display = 'block';
+
+      // Check if the URL can be loaded
+      setTimeout(() => {
+        const gameFrameContent = gameFrame.contentDocument || gameFrame.contentWindow.document;
+        if (!gameFrameContent || gameFrameContent.URL === 'about:blank') {
+          showFallback();
+        }
+      }, 2000); // Give the object a moment to try loading
+    }
+
+    function showFallback() {
+      document.getElementById('gameFrame').style.display = 'none';
+      document.getElementById('fallbackMessage').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
