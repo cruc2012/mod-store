@@ -4,49 +4,144 @@
   <meta charset="UTF-8">
   <title>Website Unblocker</title>
   <style>
-    body {
-      font-family: sans-serif;
-      text-align: center;
-      padding: 40px;
+    /* CSS for the unblocker tool */
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #f4f4f4;
+      color: #333;
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
     }
+
+    h1 {
+      font-size: 2rem;
+      color: #007bff;
+      margin-bottom: 20px;
+    }
+
+    #consentBox {
+      text-align: center;
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+
     #gameFrame {
       display: none;
       width: 100vw;
-      height: 90vh;
+      height: 100vh;
       border: none;
+      background: #fff;
     }
+
+    #fallbackMessage {
+      color: red;
+      font-size: 1.2rem;
+      display: none;
+    }
+
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 10px;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+    }
+
+    input {
+      width: 300px;
+    }
+
+    button {
+      background-color: #007bff;
+      color: white;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    /* Watermark CSS */
+    #watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 12px;
+      color: rgba(0, 0, 0, 0.5);
+      font-family: sans-serif;
+    }
+
   </style>
 </head>
 <body>
-  <div id="mainContent" style="display:none;">
-    <h1>Website Unblocker</h1>
+  <h1>Website Unblocker Tool</h1>
+  <div id="consentBox">
+    <p>Enter the URL of the website you want to unblock.</p>
     <input type="text" id="gameURL" placeholder="https://example.com">
-    <button onclick="loadGame()">Launch</button>
-    <object id="gameFrame"></object>
+    <button onclick="loadGame()">Continue</button>
   </div>
 
-  <div id="errorMessage" style="color:red;"></div>
+  <object id="gameFrame" data="" onerror="showFallback()"></object>
+
+  <div id="fallbackMessage">
+    <p>Sorry, this website cannot be embedded in the page. Please try visiting it directly.</p>
+  </div>
+
+  <div id="watermark">You're using mod-store.customvibes.store</div>
 
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const token = params.get("token");
-    const validToken = sessionStorage.getItem("unblocker-token");
+    // Check if the user is coming from the correct source
+    const allowedReferrers = [
+      "https://mod-store.customvibes.store/data/account/publisher/",
+      "https://mod-store.customvibes.store/data/account/developer/"
+    ];
 
-    if (token && token === validToken) {
-      document.getElementById("mainContent").style.display = "block";
-    } else {
-      document.getElementById("errorMessage").innerText = "Access denied: Invalid or missing token.";
+    if (!allowedReferrers.includes(document.referrer)) {
+      alert("This tool can only be accessed from the authorized websites.");
+      window.location.href = "https://mod-store.customvibes.store";  // Redirect to home
+    }
+
+    // Get the token passed from the launcher (via sessionStorage)
+    const token = sessionStorage.getItem('userToken');
+
+    // Check if the token is valid
+    if (!token || token !== "YourSecretToken12345") {  // Change to your dynamic token logic
+      alert("You do not have a valid token to access this tool.");
+      window.location.href = "https://mod-store.customvibes.store";  // Redirect to home
     }
 
     function loadGame() {
       const url = document.getElementById('gameURL').value;
-      if (!url.startsWith("http")) {
-        alert("Enter a valid URL starting with http or https");
+
+      // Validate URL format
+      if (!url.startsWith("http") && !url.startsWith("https")) {
+        alert("Please enter a valid URL (with http:// or https://)");
         return;
       }
-      const frame = document.getElementById("gameFrame");
-      frame.setAttribute("data", url);
-      frame.style.display = "block";
+
+      // Hide the consent box and show the game frame
+      document.getElementById('consentBox').style.display = 'none';
+      const gameFrame = document.getElementById('gameFrame');
+      gameFrame.setAttribute('data', url);
+      gameFrame.style.display = 'block';
+
+      // Check if the URL can be loaded
+      setTimeout(() => {
+        const gameFrameContent = gameFrame.contentDocument || gameFrame.contentWindow.document;
+        if (!gameFrameContent || gameFrameContent.URL === 'about:blank') {
+          showFallback();
+        }
+      }, 2000); // Give the object some time to try loading
+    }
+
+    function showFallback() {
+      document.getElementById('gameFrame').style.display = 'none';
+      document.getElementById('fallbackMessage').style.display = 'block';
     }
   </script>
 </body>
