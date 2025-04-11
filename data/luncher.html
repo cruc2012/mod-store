@@ -2,27 +2,36 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>Unblocker Launcher</title>
+  <title>Launcher</title>
+  <style>
+    /* Simple styling */
+    body {
+      font-family: sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f0f0f0;
+    }
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      cursor: pointer;
+      background-color: #4CAF50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+    }
+    button:hover {
+      background-color: #45a049;
+    }
+  </style>
 </head>
 <body>
-  <div id="launcherBox">
-    <h1>Launch Website Unblocker</h1>
-    <p>Click below to use the website unblocker tool.</p>
-    <button id="launchButton" onclick="launchUnblocker()">Launch Unblocker</button>
-  </div>
+  <button onclick="downloadFile()">Download Session File</button>
 
   <script>
-    function launchUnblocker() {
-      // Set session data in sessionStorage to simulate session authentication
-      const validSession = "validSession"; // This will be your key in sessionStorage
-      sessionStorage.setItem(validSession, "true");
-
-      // Define the URL you want to unblock
-      const url = "https://example.com"; // Replace with the actual URL to unblock
-
-      // Redirect to unblocker page with the URL as a query parameter
-      window.location.href = `unblockedaccess.html?url=${encodeURIComponent(url)}`;
-    }
-  </script>
-</body>
-</html>
+    function downloadFile() {
+      const blob = new Blob([ 'session_file' ], { type: 'text/plain' });
+      const link = document.create
