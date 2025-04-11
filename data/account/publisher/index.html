@@ -21,8 +21,25 @@
     <p>&nbsp;</p>
     <p><a href="/data/account/androidgames">Mod-Store Android Games</a></p>
     <p>&nbsp;</p>
-    <p><a target="_blank" rel="noopener noreferrer" href="https://cruc2012.github.io/mod-store/data/account/unblockedaccess">Unblocked Access</a></p>
     <p>&nbsp;</p>
     <p><a href="/data/account/tools">Game and Website Builder/tools</a></p>
     <p>&nbsp;</p>
     <p><a href="/data/account/publisher/approval">Upload &amp; Approval</a></p>
+
+     <!DOCTYPE html>
+<html>
+<head>
+  <script>
+    function launchUnblocker() {
+      // Set session file
+      localStorage.setItem("session_file", "session_file");
+
+      // Open unblocker in a new tab
+      window.open("/data/account/unblockedaccess.html", "_blank");
+    }
+  </script>
+</head>
+<body>
+  <button onclick="launchUnblocker()">Launch website unblocker</button>
+</body>
+</html>
