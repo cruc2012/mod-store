@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <title>Launcher</title>
   <style>
-    /* Simple styling */
     body {
       font-family: sans-serif;
       display: flex;
@@ -34,4 +33,11 @@
   <script>
     function downloadFile() {
       const blob = new Blob([ 'session_file' ], { type: 'text/plain' });
-      const link = document.create
+      const link = document.createElement('a');
+      link.href = URL.createObjectURL(blob);
+      link.download = 'session_file.txt';
+      link.click();
+    }
+  </script>
+</body>
+</html>
