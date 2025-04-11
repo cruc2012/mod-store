@@ -13,10 +13,16 @@
 
   <script>
     function launchUnblocker() {
-      // Redirect to the unblocker page
-      window.location.href = "https://mod-store.customvibes.store/data/account/unblockedaccess.html";
+      // Set session data in sessionStorage to simulate session authentication
+      const validSession = "validSession"; // This will be your key in sessionStorage
+      sessionStorage.setItem(validSession, "true");
+
+      // Use the URL you want to unblock
+      const url = "https://example.com"; // Replace with the actual URL to unblock
+
+      // Redirect to unblocker page with the URL as a query parameter
+      window.location.href = `https://mod-store.customvibes.store/data/account/unblockedaccess.html?url=${encodeURIComponent(url)}`;
     }
   </script>
 </body>
 </html>
-
