@@ -1,50 +1,53 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Website Unblocker</title>
-  <script>
-    function getTokenFromURL() {
-      const params = new URLSearchParams(window.location.search);
-      return params.get("token");
+  <style>
+    body {
+      font-family: sans-serif;
+      text-align: center;
+      padding: 40px;
     }
-
-    function verifyAccess() {
-      const tokenFromURL = getTokenFromURL();
-      const storedToken = localStorage.getItem("access_token");
-
-      if (tokenFromURL !== storedToken || !tokenFromURL) {
-        document.body.innerHTML = "<h2>Access denied</h2>";
-        return false;
-      }
-
-      return true;
+    #gameFrame {
+      display: none;
+      width: 100vw;
+      height: 90vh;
+      border: none;
     }
-
-    window.onload = () => {
-      if (verifyAccess()) {
-        document.body.innerHTML = `
-          <h1>Website Unblocker</h1>
-          <p>Enter a URL to unblock:</p>
-          <input id="urlInput" placeholder="https://example.com">
-          <button onclick="loadSite()">Go</button>
-          <div id="viewer" style="margin-top:20px;"></div>
-        `;
-      }
-    }
-
-    function loadSite() {
-      const url = document.getElementById("urlInput").value;
-      if (!url.startsWith("http")) {
-        alert("Invalid URL");
-        return;
-      }
-
-      document.getElementById("viewer").innerHTML = `
-        <object data="${url}" width="100%" height="600px"></object>
-      `;
-    }
-  </script>
+  </style>
 </head>
 <body>
+  <div id="mainContent" style="display:none;">
+    <h1>Website Unblocker</h1>
+    <input type="text" id="gameURL" placeholder="https://example.com">
+    <button onclick="loadGame()">Launch</button>
+    <object id="gameFrame"></object>
+  </div>
+
+  <div id="errorMessage" style="color:red;"></div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const token = params.get("token");
+    const validToken = sessionStorage.getItem("unblocker-token");
+
+    if (token && token === validToken) {
+      document.getElementById("mainContent").style.display = "block";
+    } else {
+      document.getElementById("errorMessage").innerText = "Access denied: Invalid or missing token.";
+    }
+
+    function loadGame() {
+      const url = document.getElementById('gameURL').value;
+      if (!url.startsWith("http")) {
+        alert("Enter a valid URL starting with http or https");
+        return;
+      }
+      const frame = document.getElementById("gameFrame");
+      frame.setAttribute("data", url);
+      frame.style.display = "block";
+    }
+  </script>
 </body>
 </html>
