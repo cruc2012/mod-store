@@ -65,16 +65,17 @@
   <div id="watermark">You're using mod-store.customvibes.store</div>
 
   <script>
-    // Trusted referrer sites
+    // The original websites that are allowed to link to this page
     const allowedReferrers = [
       "https://mod-store.customvibes.store/data/account/publisher/",
       "https://mod-store.customvibes.store/data/account/developer/"
     ];
 
+    // Check if the user is coming from the allowed websites
     if (!allowedReferrers.includes(document.referrer)) {
-      // If the referrer is not in the allowed list, show an alert and block access
-      alert("This page can only be accessed from an authorized website.");
-      window.location.href = allowedReferrers[0]; // Redirect to the first allowed site
+      // If the referrer is not one of the allowed URLs, show an alert and redirect
+      alert("This page can only be accessed from the authorized websites.");
+      window.location.href = "https://mod-store.customvibes.store"; // Redirect to the home page
     }
 
     function loadGame() {
