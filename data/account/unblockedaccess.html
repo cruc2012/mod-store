@@ -4,51 +4,82 @@
   <meta charset="UTF-8">
   <title>Website Unblocker</title>
   <style>
-    /* Simple styling for the unblocker */
-    body {
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      background: #ffffff;
+      color: rgb(0, 0, 0);
       font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #ffffff;
-      color: #333;
-      text-align: center;
+      flex-direction: column;
+      position: relative;
     }
     #errorBox {
       color: red;
       font-size: 18px;
       display: none;
     }
+    #consentBox {
+      text-align: center;
+    }
     #gameFrame {
+      display: none;
       width: 100vw;
       height: 100vh;
       border: none;
     }
+    input, button {
+      padding: 10px;
+      font-size: 16px;
+      margin: 5px;
+      border-radius: 5px;
+      border: none;
+    }
+    input {
+      width: 300px;
+    }
+    #watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
-  <div id="errorBox">
-    Access Denied: Invalid Session
+  <div id="errorBox">Access Denied: Invalid Session</div>
+
+  <div id="consentBox">
+    <h1>Website Unblocker</h1>
+    <p>Enter the URL of the website you want to unblock.</p>
+    <input type="text" id="gameURL" placeholder="https://example.com">
+    <button onclick="loadGame()">Continue</button>
   </div>
 
-  <object id="gameFrame" data="" style="display:none;"></object>
+  <object id="gameFrame" data="" onerror="showFallback()"></object>
+  <div id="fallbackMessage" style="display: none;">
+    <p>Sorry, this website cannot be embedded in the page. Please try visiting it directly.</p>
+  </div>
+
+  <!-- Watermark text -->
+  <div id="watermark">
+    You're using <strong>mod-store.customvibes.store</strong>
+  </div>
 
   <script>
-    // Simulate the checking of a session file using localStorage
+    // Simulate the checking of the session file using localStorage
     const sessionData = localStorage.getItem('session_file');
     
-    // If session data doesn't exist or isn't valid, show access denied
+    // Check if session is valid
     if (!sessionData || sessionData !== 'session_file') {
+      // Show Access Denied if the session is invalid
       document.getElementById('errorBox').style.display = 'block';
-      document.getElementById('gameFrame').style.display = 'none';
+      document.getElementById('consentBox').style.display = 'none';
     } else {
-      // Simulate successful unblocker functionality (replace with actual URL)
-      const url = 'https://example.com';  // Replace with the actual URL to unblock
-      document.getElementById('gameFrame').setAttribute('data', url);
-      document.getElementById('gameFrame').style.display = 'block';
-    }
-  </script>
-</body>
-</html>
+      // If session is valid, show URL input form
+      document.getElementById
