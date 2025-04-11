@@ -37,12 +37,12 @@
       margin: 5px;
       border-radius: 5px;
       border: none;
+      cursor: pointer;
     }
     input {
       width: 300px;
     }
 
-    /* Watermark style */
     #watermark {
       position: fixed;
       bottom: 10px;
@@ -54,18 +54,22 @@
   </style>
 </head>
 <body>
-  <div id="errorBox">Access Denied: Invalid Session</div>
+  <div id="errorBox THIS IS THE STOP">Access Denied: Invalid Session</div>
 
   <div id="consentBox">
     <h1>Website Unblocker</h1>
     <p>Enter the URL you want to access:</p>
     <input type="text" id="gameURL" placeholder="https://example.com">
     <button onclick="loadGame()">Continue</button>
+    <br>
+    <p1>Quick Access</p1>
+    <button onclick="load1()">Go to Bloxd.io</button>
+    <button onclick="load2()">Go to Ships 3d</button>
+    <button onclick="load3()">Go to Browser.lol</button>
   </div>
 
   <object id="gameFrame" data=""></object>
 
-  <!-- Watermark text -->
   <div id="watermark">
     You're using <strong>mod-store.customvibes.store</strong>
   </div>
@@ -77,7 +81,7 @@
       document.getElementById('errorBox').style.display = 'block';
       document.getElementById('consentBox').style.display = 'none';
     } else {
-      localStorage.removeItem('session_file'); // one-time access
+      localStorage.removeItem('session_file');
     }
 
     function loadGame() {
@@ -88,7 +92,20 @@
         document.getElementById('consentBox').style.display = 'none';
         return;
       }
+      showGame(url);
+    }
 
+    function load1() {
+      showGame("https://bloxd.io");
+    }
+    function load2() {
+      showGame("https://yp3d.com/ships3d/");
+    }
+    function load3() {
+      showGame("https://browser.lol");
+    }
+
+    function showGame(url) {
       document.getElementById('consentBox').style.display = 'none';
       const frame = document.getElementById('gameFrame');
       frame.setAttribute('data', url);
@@ -97,4 +114,5 @@
   </script>
 </body>
 </html>
+
 
