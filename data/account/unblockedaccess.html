@@ -17,53 +17,31 @@
       flex-direction: column;
       position: relative;
     }
-
-    #consentBox {
+    #errorBox {
       text-align: center;
+      display: none;
     }
-
     #gameFrame {
       display: none;
       width: 100vw;
       height: 100vh;
       border: none;
     }
-
     #fallbackMessage {
       color: red;
       display: none;
       font-size: 18px;
     }
-
-    input, button {
-      padding: 10px;
-      font-size: 16px;
-      margin: 5px;
-      border-radius: 5px;
-      border: none;
-    }
-
-    input {
-      width: 300px;
-    }
-
-    /* Watermark style */
-    #watermark {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      font-size: 14px;
-      color: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
+    #accessDenied {
+      color: red;
+      font-size: 24px;
+      font-weight: bold;
     }
   </style>
 </head>
 <body>
-  <div id="consentBox">
-    <h1>Website Unblocker</h1>
-    <p>Enter the URL of the website you want to unblock.</p>
-    <input type="text" id="gameURL" placeholder="https://example.com">
-    <button onclick="loadGame()">Continue</button>
+  <div id="errorBox">
+    <p id="accessDenied">Access Denied: Invalid Session</p>
   </div>
 
   <object id="gameFrame" data="" onerror="showFallback()"></object>
@@ -71,40 +49,28 @@
     <p>Sorry, this website cannot be embedded in the page. Please try visiting it directly.</p>
   </div>
 
-  <!-- Watermark text -->
-  <div id="watermark">
-    You're using <strong>mod-store.customvibes.store</strong>
-  </div>
-
   <script>
-    // Check session for authentication
-    if (!sessionStorage.getItem('authenticated') || sessionStorage.getItem('authenticated') !== 'true') {
-      alert("You need to be authenticated to use this tool.");
-      window.location.href = "https://mod-store.customvibes.store";  // Redirect to home if not authenticated
-    }
+    // Check if session storage has a valid session
+    const validSession = "validSession"; // This will be your key in sessionStorage
 
-    function loadGame() {
-      const url = document.getElementById('gameURL').value;
+    const sessionData = sessionStorage.getItem(validSession);
 
-      // Validate URL format
+    if (!sessionData) {
+      // If there is no session data, show access denied
+      document.getElementById('errorBox').style.display = 'block';
+      document.getElementById('gameFrame').style.display = 'none';
+    } else {
+      // Session is valid, load the requested URL
+      const urlParams = new URLSearchParams(window.location.search);
+      const url = urlParams.get("url");
+
       if (!url.startsWith("http") && !url.startsWith("https")) {
         alert("Please enter a valid URL (with http:// or https://)");
         return;
       }
-
-      // Hide the consent box and show the game frame
-      document.getElementById('consentBox').style.display = 'none';
-      const gameFrame = document.getElementById('gameFrame');
-      gameFrame.setAttribute('data', url);
-      gameFrame.style.display = 'block';
-
-      // Check if the URL can be loaded
-      setTimeout(() => {
-        const gameFrameContent = gameFrame.contentDocument || gameFrame.contentWindow.document;
-        if (!gameFrameContent || gameFrameContent.URL === 'about:blank') {
-          showFallback();
-        }
-      }, 2000); // Give the object some time to try loading
+      
+      document.getElementById('gameFrame').setAttribute('data', url);
+      document.getElementById('gameFrame').style.display = 'block';
     }
 
     function showFallback() {
