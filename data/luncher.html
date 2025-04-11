@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Launcher Page</title>
+</head>
+<body>
+  <h1>Launcher</h1>
+  <p>Click the button to open the unblocker page.</p>
+  <button onclick="launchUnblocker()">Open Unblocker</button>
+
+  <script>
+    function launchUnblocker() {
+      const token = crypto.randomUUID();  // Generate a unique token
+      sessionStorage.setItem("unblocker-token", token);  // Save the token to sessionStorage
+
+      // Open the unblocker page and pass the token as a URL parameter
+      window.open(`/data/account/unblockedaccess.html?token=${token}`, "_blank");
+    }
+  </script>
+</body>
+</html>
