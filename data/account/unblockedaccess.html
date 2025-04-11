@@ -40,13 +40,6 @@
     input {
       width: 300px;
     }
-    #watermark {
-      position: fixed;
-      bottom: 10px;
-      right: 10px;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.7);
-    }
   </style>
 </head>
 <body>
@@ -60,54 +53,3 @@
   <object id="gameFrame" data="" onerror="showFallback()"></object>
   <div id="fallbackMessage">
     <p>Sorry, this website cannot be embedded in the page. Please try visiting it directly.</p>
-  </div>
-
-  <div id="watermark">You're using mod-store.customvibes.store</div>
-
-  <script>
-    // The original websites that are allowed to link to this page
-    const allowedReferrers = [
-      "https://mod-store.customvibes.store/data/account/publisher/",
-      "https://mod-store.customvibes.store/data/account/developer/"
-    ];
-
-    // Check if the user is coming from the allowed websites
-    if (!allowedReferrers.includes(document.referrer)) {
-      // If the referrer is not one of the allowed URLs, show an alert and redirect
-      alert("This page can only be accessed from the authorized websites.");
-      window.location.href = "https://mod-store.customvibes.store"; // Redirect to the home page
-    }
-
-    function loadGame() {
-      const url = document.getElementById('gameURL').value;
-
-      // Check if the URL is valid
-      if (!url.startsWith("http") && !url.startsWith("https")) {
-        alert("Please enter a valid URL (with http:// or https://)");
-        return;
-      }
-
-      // Hide the consent box
-      document.getElementById('consentBox').style.display = 'none';
-
-      // Set the URL in the object tag
-      const gameFrame = document.getElementById('gameFrame');
-      gameFrame.setAttribute('data', url);
-      gameFrame.style.display = 'block';
-
-      // Check if the URL can be loaded
-      setTimeout(() => {
-        const gameFrameContent = gameFrame.contentDocument || gameFrame.contentWindow.document;
-        if (!gameFrameContent || gameFrameContent.URL === 'about:blank') {
-          showFallback();
-        }
-      }, 2000); // Give the object a moment to try loading
-    }
-
-    function showFallback() {
-      document.getElementById('gameFrame').style.display = 'none';
-      document.getElementById('fallbackMessage').style.display = 'block';
-    }
-  </script>
-</body>
-</html>
