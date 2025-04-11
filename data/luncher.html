@@ -7,22 +7,16 @@
 <body>
   <div id="launcherBox">
     <h1>Launch Website Unblocker</h1>
-    <p>To use the unblocker tool, you need to be authenticated. Click below to continue.</p>
+    <p>Click below to use the website unblocker tool.</p>
     <button id="launchButton" onclick="launchUnblocker()">Launch Unblocker</button>
   </div>
 
   <script>
-    // Check session for authentication
-    if (!sessionStorage.getItem('authenticated') || sessionStorage.getItem('authenticated') !== 'true') {
-      // If not authenticated, disable the button and inform the user
-      document.getElementById('launchButton').disabled = true;
-      document.getElementById('launcherBox').innerHTML += "<p style='color: red;'>You need to be logged in to use this tool.</p>";
-    }
-
     function launchUnblocker() {
-      // Redirect to the unblocker page if authenticated
+      // Redirect to the unblocker page
       window.location.href = "https://mod-store.customvibes.store/data/account/unblockedaccess.html";
     }
   </script>
 </body>
 </html>
+
