@@ -1,43 +1,18 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8">
   <title>Launcher</title>
-  <style>
-    body {
-      font-family: sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #f0f0f0;
-    }
-    button {
-      padding: 15px 30px;
-      font-size: 18px;
-      cursor: pointer;
-      background-color: #4CAF50;
-      color: white;
-      border: none;
-      border-radius: 5px;
-    }
-    button:hover {
-      background-color: #45a049;
-    }
-  </style>
-</head>
-<body>
-  <button onclick="downloadFile()">Download Session File</button>
-
   <script>
-    function downloadFile() {
-      const blob = new Blob([ 'session_file' ], { type: 'text/plain' });
-      const link = document.createElement('a');
-      link.href = URL.createObjectURL(blob);
-      link.download = 'session_file.txt';
-      link.click();
+    function launchUnblocker() {
+      // Set session file
+      localStorage.setItem("session_file", "session_file");
+
+      // Open unblocker in a new tab
+      window.open("/data/account/unblockedaccess.html", "_blank");
     }
   </script>
+</head>
+<body>
+  <button onclick="launchUnblocker()">Launch Unblocker</button>
 </body>
 </html>
