@@ -65,13 +65,16 @@
   <div id="watermark">You're using mod-store.customvibes.store</div>
 
   <script>
-    // Check if the user is coming from the original website
-    const allowedReferrer = "https://mod-store.customvibes.store"; // The original website's URL
+    // Check if the user is coming from one of the allowed websites
+    const allowedReferrers = [
+      "https://mod-store.customvibes.store/data/account/publisher/", // The original website's URL
+      "https://mod-store.customvibes.store/data/account/developer/" // Add a second allowed website
+    ];
 
-    if (document.referrer !== allowedReferrer) {
-      // If the referrer is not the allowed one, show an alert and block access
-      alert("This page can only be accessed from the original website.");
-      window.location.href = allowedReferrer; // Redirect to the original site
+    if (!allowedReferrers.includes(document.referrer)) {
+      // If the referrer is not in the allowed list, show an alert and block access
+      alert("This page can only be accessed from an authorized website.");
+      window.location.href = allowedReferrers[0]; // Redirect to the first allowed site
     }
 
     function loadGame() {
