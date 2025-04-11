@@ -65,10 +65,10 @@
   <div id="watermark">You're using mod-store.customvibes.store</div>
 
   <script>
-    // Check if the user is coming from one of the allowed websites
+    // Trusted referrer sites
     const allowedReferrers = [
-      "https://mod-store.customvibes.store/data/account/publisher/", // The original website's URL
-      "https://mod-store.customvibes.store/data/account/developer/" // Add a second allowed website
+      "https://mod-store.customvibes.store/data/account/publisher/",
+      "https://mod-store.customvibes.store/data/account/developer/"
     ];
 
     if (!allowedReferrers.includes(document.referrer)) {
