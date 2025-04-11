@@ -4,81 +4,51 @@
   <meta charset="UTF-8">
   <title>Website Unblocker</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      height: 100%;
-      background: #ffffff;
-      color: rgb(0, 0, 0);
+    /* Simple styling for the unblocker */
+    body {
       font-family: sans-serif;
       display: flex;
       justify-content: center;
       align-items: center;
-      flex-direction: column;
-      position: relative;
+      height: 100vh;
+      margin: 0;
+      background-color: #ffffff;
+      color: #333;
+      text-align: center;
     }
     #errorBox {
-      text-align: center;
+      color: red;
+      font-size: 18px;
       display: none;
     }
     #gameFrame {
-      display: none;
       width: 100vw;
       height: 100vh;
       border: none;
-    }
-    #fallbackMessage {
-      color: red;
-      display: none;
-      font-size: 18px;
-    }
-    #accessDenied {
-      color: red;
-      font-size: 24px;
-      font-weight: bold;
     }
   </style>
 </head>
 <body>
   <div id="errorBox">
-    <p id="accessDenied">Access Denied: Invalid Session</p>
+    Access Denied: Invalid Session
   </div>
 
-  <object id="gameFrame" data="" onerror="showFallback()"></object>
-  <div id="fallbackMessage">
-    <p>Sorry, this website cannot be embedded in the page. Please try visiting it directly.</p>
-  </div>
+  <object id="gameFrame" data="" style="display:none;"></object>
 
   <script>
-    // Check for session
-    const validSession = "validSession"; // The session key you use for validation
-    const sessionData = sessionStorage.getItem(validSession);
-
-    // Check if there's no session or it's invalid
-    if (!sessionData) {
-      // If no valid session, show access denied
+    // Simulate the checking of a session file using localStorage
+    const sessionData = localStorage.getItem('session_file');
+    
+    // If session data doesn't exist or isn't valid, show access denied
+    if (!sessionData || sessionData !== 'session_file') {
       document.getElementById('errorBox').style.display = 'block';
       document.getElementById('gameFrame').style.display = 'none';
     } else {
-      // Session is valid, get the URL parameter and try to load it
-      const urlParams = new URLSearchParams(window.location.search);
-      const url = urlParams.get("url");
-
-      // Validate the URL
-      if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
-        document.getElementById('gameFrame').setAttribute('data', url);
-        document.getElementById('gameFrame').style.display = 'block';
-      } else {
-        alert("Invalid URL");
-        showFallback();
-      }
-    }
-
-    function showFallback() {
-      document.getElementById('gameFrame').style.display = 'none';
-      document.getElementById('fallbackMessage').style.display = 'block';
+      // Simulate successful unblocker functionality (replace with actual URL)
+      const url = 'https://example.com';  // Replace with the actual URL to unblock
+      document.getElementById('gameFrame').setAttribute('data', url);
+      document.getElementById('gameFrame').style.display = 'block';
     }
   </script>
 </body>
 </html>
-
