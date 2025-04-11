@@ -50,27 +50,28 @@
   </div>
 
   <script>
-    // Check if session storage has a valid session
-    const validSession = "validSession"; // This will be your key in sessionStorage
-
+    // Check for session
+    const validSession = "validSession"; // The session key you use for validation
     const sessionData = sessionStorage.getItem(validSession);
 
+    // Check if there's no session or it's invalid
     if (!sessionData) {
-      // If there is no session data, show access denied
+      // If no valid session, show access denied
       document.getElementById('errorBox').style.display = 'block';
       document.getElementById('gameFrame').style.display = 'none';
     } else {
-      // Session is valid, load the requested URL
+      // Session is valid, get the URL parameter and try to load it
       const urlParams = new URLSearchParams(window.location.search);
       const url = urlParams.get("url");
 
-      if (!url.startsWith("http") && !url.startsWith("https")) {
-        alert("Please enter a valid URL (with http:// or https://)");
-        return;
+      // Validate the URL
+      if (url && (url.startsWith("http://") || url.startsWith("https://"))) {
+        document.getElementById('gameFrame').setAttribute('data', url);
+        document.getElementById('gameFrame').style.display = 'block';
+      } else {
+        alert("Invalid URL");
+        showFallback();
       }
-      
-      document.getElementById('gameFrame').setAttribute('data', url);
-      document.getElementById('gameFrame').style.display = 'block';
     }
 
     function showFallback() {
@@ -80,3 +81,4 @@
   </script>
 </body>
 </html>
+
