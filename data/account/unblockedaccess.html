@@ -72,14 +72,54 @@
   </div>
 
   <script>
-    // Simulate the checking of the session file using localStorage
+    // Check if the session is stored in localStorage
     const sessionData = localStorage.getItem('session_file');
     
-    // Check if session is valid
+    // If session is not valid or doesn't exist, show access denied
     if (!sessionData || sessionData !== 'session_file') {
-      // Show Access Denied if the session is invalid
       document.getElementById('errorBox').style.display = 'block';
       document.getElementById('consentBox').style.display = 'none';
     } else {
-      // If session is valid, show URL input form
-      document.getElementById
+      // If session is valid, show the URL input form
+      document.getElementById('consentBox').style.display = 'block';
+      
+      // Remove session file after validation
+      localStorage.removeItem('session_file');
+    }
+
+    // Function to load the game URL
+    function loadGame() {
+      const url = document.getElementById('gameURL').value;
+
+      // Validate the URL
+      if (!url.startsWith("http") && !url.startsWith("https")) {
+        document.getElementById('errorBox').innerText = "Please enter a valid URL (with http:// or https://)";
+        document.getElementById('errorBox').style.display = 'block';
+        return;
+      }
+
+      // Hide the consent box and show the iframe
+      document.getElementById('consentBox').style.display = 'none';
+      const gameFrame = document.getElementById('gameFrame');
+      gameFrame.setAttribute('data', url);
+      gameFrame.style.display = 'block';
+
+      // Check if the URL can be loaded
+      setTimeout(() => {
+        const gameFrameContent = gameFrame.contentDocument || gameFrame.contentWindow.document;
+
+        if (!gameFrameContent || gameFrameContent.URL === 'about:blank') {
+          showFallback();
+        }
+      }, 2000); // Give the object a moment to try loading
+    }
+
+    // Show fallback message if the URL can't be embedded
+    function showFallback() {
+      document.getElementById('gameFrame').style.display = 'none';
+      document.getElementById('fallbackMessage').style.display = 'block';
+    }
+  </script>
+</body>
+</html>
+
