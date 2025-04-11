@@ -15,6 +15,7 @@
       justify-content: center;
       align-items: center;
       flex-direction: column;
+      position: relative;
     }
     #errorBox {
       color: red;
@@ -40,6 +41,16 @@
     input {
       width: 300px;
     }
+
+    /* Watermark style */
+    #watermark {
+      position: fixed;
+      bottom: 10px;
+      right: 10px;
+      font-size: 14px;
+      color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+    }
   </style>
 </head>
 <body>
@@ -53,6 +64,11 @@
   </div>
 
   <object id="gameFrame" data=""></object>
+
+  <!-- Watermark text -->
+  <div id="watermark">
+    You're using <strong>mod-store.customvibes.store</strong>
+  </div>
 
   <script>
     const session = localStorage.getItem('session_file');
@@ -81,3 +97,4 @@
   </script>
 </body>
 </html>
+
